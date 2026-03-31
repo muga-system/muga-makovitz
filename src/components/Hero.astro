@@ -1,0 +1,36 @@
+---
+type Props = {
+  brand: string;
+  heading: string;
+  subtext: string;
+  reinforcement?: string;
+  heroImageSrc: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+};
+
+const { brand, heading, subtext, reinforcement, heroImageSrc, primaryCta, secondaryCta } = Astro.props;
+---
+
+<header class="hero" aria-labelledby="hero-title">
+  <div class="container hero-grid grid-12">
+    <div class="hero-content">
+      <h1 id="hero-title">{heading}</h1>
+      <p class="hero-copy">{subtext}</p>
+      {reinforcement && <p class="hero-reinforcement">{reinforcement}</p>}
+
+      <div class="hero-actions" role="group" aria-label="Hero actions">
+        <a class="btn btn-primary" href={primaryCta.href} data-track="click_whatsapp_primary" data-label="Hero primary CTA">
+          {primaryCta.label}
+        </a>
+        <a class="btn btn-secondary" href={secondaryCta.href} data-track="click_whatsapp_secondary" data-label="Hero secondary CTA">
+          {secondaryCta.label}
+        </a>
+      </div>
+    </div>
+
+    <figure class="hero-visual">
+      <img class="hero-photo" src={heroImageSrc} alt={`Imagen principal de ${brand}`} loading="eager" decoding="async" />
+    </figure>
+  </div>
+</header>

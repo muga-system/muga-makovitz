@@ -1,0 +1,133 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import CategoryCard from "../components/CategoryCard.astro";
+import FeaturedProductCard from "../components/FeaturedProductCard.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { categoryItems, featuredProducts, siteConfig, weeklyWorks } from "../data/site";
+import { buildWhatsAppUrl } from "../utils/whatsapp";
+
+const footerWhatsappUrl = buildWhatsAppUrl(
+  siteConfig.whatsappNumber,
+  "Hola! Quiero consultar una pieza de Nora Makovitz."
+);
+---
+
+<BaseLayout
+  title={siteConfig.seo.title}
+  description={siteConfig.seo.description}
+  canonical={siteConfig.canonical}
+  ogImage={siteConfig.seo.ogImage}
+>
+  <Navbar
+    ctaUrl="/carrito"
+    ctaLabel="Carrito"
+    ctaType="cart"
+    homeHref="/"
+  />
+
+  <Hero
+    brand={siteConfig.brand}
+    heading={siteConfig.hero.heading}
+    subtext={siteConfig.hero.subtext}
+    reinforcement={siteConfig.hero.reinforcement}
+    heroImageSrc={siteConfig.assets.heroImage}
+    primaryCta={{ label: "Ver coleccion", href: "/tienda" }}
+    secondaryCta={{ label: "Elegir modelo", href: "/tienda" }}
+  />
+
+  <main id="contenido">
+    <section class="section section-collection" id="categorias" aria-labelledby="categories-title">
+      <div class="container collection-shell">
+        <div class="collection-head">
+          <p class="section-kicker">Coleccion</p>
+          <h2 id="categories-title" class="section-title-left">Coleccion</h2>
+          <p class="section-subtitle">Bolsos, carteras y organizadores para uso diario.</p>
+          <ul class="collection-points" aria-label="Valores de la coleccion">
+            <li>Hecho a mano</li>
+            <li>Uso real</li>
+            <li>Produccion limitada</li>
+          </ul>
+        </div>
+
+        <div class="grid-12 cards-grid categories-grid">
+          {
+            categoryItems.map((item) => (
+              <div class="col-span-12 sm-col-span-6 lg-col-span-3">
+                <CategoryCard
+                  item={item}
+                  ctaUrl={`/tienda/${item.slug}`}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="productos" aria-labelledby="featured-title">
+      <div class="container">
+        <p class="section-kicker">Seleccion</p>
+        <h2 id="featured-title" class="section-title-left">Modelos seleccionados</h2>
+        <p class="section-subtitle">Nombre claro, uso real y compra simple.</p>
+
+        <div class="featured-grid">
+          {
+            featuredProducts.map((item) => (
+              <div>
+                <FeaturedProductCard
+                  item={item}
+                  ctaUrl={`/producto/${item.slug}`}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-trust" id="confianza" aria-labelledby="weekly-title">
+      <div class="container trust-shell">
+        <p class="section-kicker">Confianza</p>
+        <h2 id="weekly-title" class="section-title-left">Confianza</h2>
+        <p class="section-subtitle">Informacion clara para comprar sin dudas.</p>
+
+        <div class="trust-grid" aria-label="Pilares de confianza">
+          {
+            weeklyWorks.map((item, index) => (
+              <article class="trust-card" aria-label={item.title}>
+                <p class="trust-step">0{index + 1}</p>
+                <h3 class="card-title">{item.title}</h3>
+                <p class="card-meta">{item.note}</p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="trust-actions">
+          <a
+            class="btn btn-secondary"
+            href={buildWhatsAppUrl(siteConfig.whatsappNumber, "Hola! Quiero consultar sobre los tiempos y disponibilidad.")}
+          >
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-reinforcement" aria-labelledby="reinforcement-title">
+      <div class="container reinforcement-box">
+        <h2 id="reinforcement-title" class="section-title-left">Hecho para durar</h2>
+        <p class="section-subtitle">Hecho a mano - Produccion limitada - Sin intermediarios.</p>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter
+    brand={siteConfig.brand}
+    instagram={siteConfig.instagram}
+    instagramHandle={siteConfig.instagramHandle}
+    whatsappUrl={footerWhatsappUrl}
+  />
+</BaseLayout>

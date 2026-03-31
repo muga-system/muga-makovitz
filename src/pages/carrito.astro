@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { siteConfig } from "../data/site";
+import { buildWhatsAppUrl } from "../utils/whatsapp";
+
+const footerWhatsappUrl = buildWhatsAppUrl(
+  siteConfig.whatsappNumber,
+  "Hola! Quiero consultar mi pedido en Nora Makovitz."
+);
+
+---
+
+<BaseLayout
+  title={`Carrito | ${siteConfig.brand}`}
+  description="Revisa tu carrito y confirma tu pedido."
+  canonical={`${siteConfig.canonical}/carrito`}
+  ogImage={siteConfig.seo.ogImage}
+>
+  <Navbar
+    logoSrc={siteConfig.assets.logo}
+    ctaUrl="/carrito"
+    ctaLabel="Carrito"
+    ctaType="cart"
+    homeHref="/"
+  />
+
+  <main id="contenido" class="section">
+    <div class="container">
+      <h1>Carrito</h1>
+      <p class="section-subtitle">Revisa tu pedido antes de confirmar la compra.</p>
+
+      <p class="cart-note">Hecho a mano - Produccion limitada - Entrega estimada: 3 a 7 dias habiles.</p>
+
+      <div id="cart-empty" class="cart-empty" hidden>
+        Tu carrito esta vacio. <a href="/tienda">Ir a tienda</a>
+      </div>
+
+      <div id="cart-list" class="cart-list"></div>
+
+      <div class="cart-summary" id="cart-summary" hidden>
+        <p>Items: <strong id="cart-count">0</strong></p>
+        <p>Total: <strong id="cart-total">$0</strong></p>
+        <div class="cart-summary-actions">
+          <a class="btn btn-secondary" href="/tienda">Seguir comprando</a>
+          <a class="btn btn-primary" href="/checkout">Ir a checkout</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <SiteFooter
+    brand={siteConfig.brand}
+    instagram={siteConfig.instagram}
+    instagramHandle={siteConfig.instagramHandle}
+    whatsappUrl={footerWhatsappUrl}
+  />
+
+  <script>
+    // @ts-nocheck
+    import { formatArs } from "../utils/format";
+    import { getCart, updateCartQty, removeFromCart, getCartTotals } from "../store/cart";
+
+    const list = document.getElementById("cart-list");
+    const empty = document.getElementById("cart-empty");
+    const summary = document.getElementById("cart-summary");
+    const countNode = document.getElementById("cart-count");
+    const totalNode = document.getElementById("cart-total");
+    const navButton = document.querySelector("[data-cart-button]");
+
+    const getStockLabel = (stock) => {
+      if (stock <= 0) return "Sin stock";
+      if (stock <= 2) return `Ultimas unidades (${stock})`;
+      return `Disponible (${stock})`;
+    };
+
+    const renderCartCount = () => {
+      const badge = document.querySelector("[data-cart-count]");
+      if (!navButton) return;
+      const totals = getCartTotals();
+      navButton.classList.toggle("is-full", totals.count > 0);
+      navButton.setAttribute("aria-label", totals.count > 0 ? `Carrito con ${totals.count} productos` : "Carrito vacio");
+      if (badge) {
+        badge.textContent = String(totals.count);
+        badge.hidden = totals.count === 0;
+      }
+    };
+
+    const render = () => {
+      const items = getCart();
+      list.innerHTML = "";
+
+      if (!items.length) {
+        empty.hidden = false;
+        summary.hidden = true;
+        renderCartCount();
+        return;
+      }
+
+      empty.hidden = true;
+      summary.hidden = false;
+
+      items.forEach((item) => {
+        const article = document.createElement("article");
+        article.className = "cart-item";
+        article.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" />
+          <div>
+            <h2>${item.name}</h2>
+            <p>${formatArs(item.price)}</p>
+            <p class="stock ${item.stock > 0 ? "stock-ok" : "stock-out"}">${getStockLabel(item.stock)}</p>
+          </div>
+          <div class="cart-qty">
+            <button type="button" data-action="minus">-</button>
+            <span>${item.qty}</span>
+            <button type="button" data-action="plus">+</button>
+            <button type="button" data-action="remove" class="remove">Quitar</button>
+          </div>
+        `;
+
+        article.querySelector('[data-action="minus"]').addEventListener("click", () => {
+          if (item.qty <= 1) {
+            removeFromCart(item.id);
+          } else {
+            updateCartQty(item.id, item.qty - 1);
+          }
+          render();
+        });
+
+        article.querySelector('[data-action="plus"]').addEventListener("click", () => {
+          updateCartQty(item.id, item.qty + 1);
+          render();
+        });
+
+        article.querySelector('[data-action="remove"]').addEventListener("click", () => {
+          removeFromCart(item.id);
+          render();
+        });
+
+        list.appendChild(article);
+      });
+
+      const totals = getCartTotals();
+      countNode.textContent = String(totals.count);
+      totalNode.textContent = formatArs(totals.total);
+      renderCartCount();
+    };
+
+    render();
+  </script>
+</BaseLayout>

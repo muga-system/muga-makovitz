@@ -1,0 +1,252 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { categories, products } from "../../data/products";
+import { siteConfig } from "../../data/site";
+import { formatArs } from "../../utils/format";
+import { buildWhatsAppUrl } from "../../utils/whatsapp";
+
+export function getStaticPaths() {
+  return categories.map((cat) => ({
+    params: { categoria: cat.slug },
+  }));
+}
+
+const { categoria } = Astro.params;
+
+const getStockLabel = (stock: number): string => {
+  if (stock <= 0) return "Sin stock";
+  if (stock <= 2) return `Ultimas unidades (${stock})`;
+  return `Disponible (${stock})`;
+};
+
+const category = categories.find((c) => c.slug === categoria);
+const categoryLabel = category?.label || "Tienda";
+
+const activeProducts = products.filter((product) => product.active);
+const filteredProducts = categoria && categoria !== "all" 
+  ? activeProducts.filter((p) => p.category === categoria)
+  : activeProducts;
+
+const footerWhatsappUrl = buildWhatsAppUrl(
+  siteConfig.whatsappNumber,
+  "Hola! Quiero consultar una pieza de la tienda Nora Makovitz."
+);
+---
+
+<BaseLayout
+  title={`${categoryLabel} | ${siteConfig.brand}`}
+  description={`Compra piezas disponibles en ${categoryLabel}, con precio fijo y stock visible.`}
+  canonical={`${siteConfig.canonical}/tienda/${categoria}`}
+  ogImage={siteConfig.seo.ogImage}
+>
+  <Navbar
+    ctaUrl="/carrito"
+    ctaLabel="Carrito"
+    ctaType="cart"
+    homeHref="/"
+  />
+
+  <main id="contenido" class="section">
+    <div class="container shop-header">
+      <h1>{categoryLabel}</h1>
+      <p class="section-subtitle">Modelos para uso diario, con stock y disponibilidad real.</p>
+    </div>
+
+    <div class="container category-filter" role="tablist" aria-label="Filtrar por categoria">
+      {
+        categories.map((cat) => (
+          <button class="filter-chip" type="button" data-category={cat.slug}>
+            {cat.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <section class="container section" aria-label="Listado de productos">
+      <div class="grid-12 cards-grid" id="shop-grid">
+        {
+          filteredProducts.map((item) => (
+            <article class="col-span-12 sm-col-span-6 lg-col-span-3 shop-product" data-category={item.category}>
+              <a class="shop-image-link" href={`/producto/${item.slug}`}>
+                <img class="card-image card-image-product" src={item.images[0]} alt={item.name} loading="lazy" decoding="async" />
+              </a>
+              <h2 class="card-title">{item.name}</h2>
+              <p class="card-meta">{item.cardBenefit}</p>
+              <p class="card-price">{formatArs(item.price)}</p>
+              <p class={`stock ${item.stock > 0 ? "stock-ok" : "stock-out"}`}>
+                {getStockLabel(item.stock)}
+              </p>
+              <div class="shop-actions">
+                <button
+                  type="button"
+                  class="btn btn-primary add-cart"
+                  data-id={item.id}
+                  data-slug={item.slug}
+                  data-name={item.name}
+                  data-price={item.price}
+                  data-stock={item.stock}
+                  data-image={item.images[0]}
+                  disabled={item.stock === 0}
+                >
+                  <i data-lucide="shopping-cart" class="btn-icon" aria-hidden="true"></i>
+                  <span>Agregar</span>
+                </button>
+                <button type="button" class="btn btn-secondary add-favorite" data-id={item.id}>
+                  Guardar
+                </button>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter
+    brand={siteConfig.brand}
+    instagram={siteConfig.instagram}
+    instagramHandle={siteConfig.instagramHandle}
+    whatsappUrl={footerWhatsappUrl}
+  />
+
+  <script>
+    // @ts-nocheck
+    import { addToCart, getCartTotals } from "../../store/cart";
+    import { toggleFavorite, isFavorite } from "../../store/favorites";
+    import { filterStore } from "../../store/filter";
+    import { createIcons, ShoppingCart } from "lucide";
+
+    createIcons({ icons: { ShoppingCart } });
+
+    const renderCartCount = () => {
+      const navButton = document.querySelector("[data-cart-button]");
+      const badge = document.querySelector("[data-cart-count]");
+      if (!navButton) return;
+      const totals = getCartTotals();
+      navButton.classList.toggle("is-full", totals.count > 0);
+      navButton.setAttribute("aria-label", totals.count > 0 ? `Carrito con ${totals.count} productos` : "Carrito vacio");
+      if (badge) {
+        badge.textContent = String(totals.count);
+        badge.hidden = totals.count === 0;
+      }
+    };
+
+    const updateFavoriteLabels = () => {
+      document.querySelectorAll(".add-favorite").forEach((btn) => {
+        btn.textContent = isFavorite(btn.dataset.id) ? "Guardado" : "Guardar";
+      });
+    };
+
+    const getCategoryFromUrl = () => {
+      const path = window.location.pathname;
+      const match = path.match(/^\/tienda\/([^/]+)$/);
+      return match ? match[1] : "all";
+    };
+
+    const initShopPage = () => {
+      if (!window.location.pathname.startsWith("/tienda")) return;
+
+      const chips = Array.from(document.querySelectorAll(".filter-chip"));
+      const cards = Array.from(document.querySelectorAll(".shop-product"));
+      const filterWrap = document.querySelector(".category-filter");
+      const grid = document.getElementById("shop-grid");
+      if (!chips.length || !cards.length || !filterWrap || !grid) return;
+
+      const availableCategories = new Set(chips.map((chip) => chip.dataset.category));
+
+      const setActiveChip = (active) => {
+        chips.forEach((chip) => {
+          chip.classList.toggle("is-active", chip.dataset.category === active);
+        });
+      };
+
+      const applyCategoryFilter = (selected) => {
+        const safeCategory = availableCategories.has(selected) ? selected : "all";
+        setActiveChip(safeCategory);
+        filterStore.getState().setCategory(safeCategory);
+        
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const visible = safeCategory === "all" || card.dataset.category === safeCategory;
+          card.style.display = visible ? "grid" : "none";
+          if (visible) visibleCount += 1;
+        });
+
+        grid.classList.toggle("is-single-result", visibleCount === 1);
+      };
+
+      const initialCategory = getCategoryFromUrl();
+      applyCategoryFilter(initialCategory);
+
+      if (!filterWrap.dataset.bound) {
+        filterWrap.dataset.bound = "true";
+        filterWrap.addEventListener("click", (event) => {
+          const chip = event.target.closest(".filter-chip");
+          if (!chip) return;
+          const selected = chip.dataset.category;
+          applyCategoryFilter(selected);
+          const baseUrl = window.location.origin;
+          if (selected === "all") {
+            window.history.replaceState({}, "", `${baseUrl}/tienda`);
+          } else {
+            window.history.replaceState({}, "", `${baseUrl}/tienda/${selected}`);
+          }
+        });
+      }
+
+      if (!grid.dataset.bound) {
+        grid.dataset.bound = "true";
+        grid.addEventListener("click", (event) => {
+          const cartButton = event.target.closest(".add-cart");
+          if (cartButton) {
+            const stock = Number(cartButton.dataset.stock || "0");
+            if (stock <= 0) return;
+
+            addToCart(
+              {
+                id: cartButton.dataset.id,
+                slug: cartButton.dataset.slug,
+                name: cartButton.dataset.name,
+                price: Number(cartButton.dataset.price),
+                stock,
+                image: cartButton.dataset.image
+              },
+              1
+            );
+            renderCartCount();
+            showToast("Agregado al carrito", "success", "cart");
+            const btn = cartButton.closest("button");
+            if (btn) {
+              btn.disabled = true;
+              btn.textContent = "Agregado";
+            }
+            return;
+          }
+
+          const favButton = event.target.closest(".add-favorite");
+          if (favButton) {
+            const isFav = toggleFavorite(favButton.dataset.id);
+            showToast(isFav.includes(favButton.dataset.id) ? "Guardado en favoritos" : "Eliminado de favoritos", "success", "heart");
+            updateFavoriteLabels();
+            const btn = favButton.closest("button");
+            if (btn) {
+              btn.textContent = isFavorite(btn.dataset.id) ? "Guardado" : "Guardar";
+            }
+          }
+        });
+      }
+
+      filterStore.subscribe((state) => {
+        applyCategoryFilter(state.activeCategory);
+      });
+
+      renderCartCount();
+      updateFavoriteLabels();
+    };
+
+    initShopPage();
+    document.addEventListener("astro:page-load", initShopPage);
+  </script>
+</BaseLayout>
