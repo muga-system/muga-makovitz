@@ -74,7 +74,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
         <div class="featured-grid">
           {
-            featuredProducts.map((item) => (
+            featuredProducts.slice(0, 3).map((item) => (
               <div>
                 <FeaturedProductCard
                   item={item}
@@ -83,6 +83,10 @@ const footerWhatsappUrl = buildWhatsAppUrl(
               </div>
             ))
           }
+        </div>
+
+        <div class="featured-actions">
+          <a class="btn btn-primary" href="/tienda">Ver más</a>
         </div>
       </div>
     </section>

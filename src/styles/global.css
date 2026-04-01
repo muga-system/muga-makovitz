@@ -639,6 +639,12 @@ a {
   background: color-mix(in srgb, var(--primary) 78%, var(--primary-strong) 22%);
 }
 
+.featured-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
 .card-image-product {
   aspect-ratio: 4 / 5;
   border: 1px solid var(--border);
