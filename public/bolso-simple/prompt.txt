@@ -1,0 +1,31 @@
+Tomar la imagen proporcionada como base.
+
+1. Recortar el producto (bolso tote) eliminando completamente el fondo original.
+2. Mantener el producto EXACTAMENTE igual:
+   - No modificar diseño, tipografía, colores ni textura.
+   - No reinterpretar la estampa.
+   - Respetar proporciones reales.
+   - Respetar el largo real de las correas (no acortarlas ni tensarlas artificialmente).
+
+3. Colocar el producto en un escenario tipo mockup minimalista:
+   - Formato cuadrado (1:1).
+   - Base: pedestal blanco limpio, mate.
+   - Fondo: pared neutra cálida (blanco/beige suave).
+   - Iluminación: luz natural suave, cálida, lateral (tipo ventana).
+   - Sombras: suaves y realistas, coherentes con la dirección de la luz.
+
+4. Agregar un soporte físico REALISTA para las correas:
+   - Soporte simple de madera (vertical), apoyado sobre el pedestal.
+   - Las correas deben caer naturalmente sobre el soporte (no flotando).
+   - Evitar tensión artificial: deben verse relajadas y con gravedad real.
+
+5. Agregar elementos sutiles de contexto:
+   - Plantas verdes naturales (laterales o fondo).
+   - Mantener estética minimalista, sin sobrecargar.
+
+6. Mantener enfoque en el producto:
+   - El bolso debe ser el elemento principal.
+   - Nitidez alta, look fotográfico profesional.
+
+Resultado:
+Imagen de producto tipo catálogo premium, realista, limpia, coherente, sin alterar el producto original.
