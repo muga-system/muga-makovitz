@@ -185,9 +185,6 @@ const { title, description, canonical, ogImage } = Astro.props;
         }
       };
 
-      window.addEventListener("storage", syncFavoritesBadge);
-      syncFavoritesBadge();
-
       const syncCartBadge = () => {
         const button = document.querySelector("[data-cart-button]");
         if (!button) return;
@@ -200,7 +197,6 @@ const { title, description, canonical, ogImage } = Astro.props;
         } catch {
           count = 0;
         }
-
         button.classList.toggle("is-full", count > 0);
         button.classList.toggle("btn-primary", count > 0);
         button.classList.toggle("btn-secondary", count === 0);
@@ -211,8 +207,15 @@ const { title, description, canonical, ogImage } = Astro.props;
         }
       };
 
+      window.addEventListener("storage", syncFavoritesBadge);
       window.addEventListener("storage", syncCartBadge);
+      syncFavoritesBadge();
       syncCartBadge();
+
+      document.addEventListener("astro:page-load", () => {
+        syncFavoritesBadge();
+        syncCartBadge();
+      });
 
       const track = (eventName, payload = {}) => {
         const detail = { eventName, ...payload, ts: Date.now() };
