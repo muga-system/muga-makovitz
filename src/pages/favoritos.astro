@@ -88,8 +88,8 @@ const getStockLabel = (stock: number): string => {
 
   <script>
     // @ts-nocheck
-    import { cartStore } from "../store/cart";
-    import { getFavorites, removeFavorite } from "../store/favorites";
+    import { cartCount, addToCart } from "../store/cart";
+    import { toggleFavorite, isFavorite, getFavorites, removeFavorite, favoriteIds } from "../store/favorites";
 
     const initFavoritesPage = () => {
       if (!window.location.pathname.startsWith("/favoritos")) return;
@@ -102,8 +102,10 @@ const getStockLabel = (stock: number): string => {
       const renderCartCount = () => {
         const badge = document.querySelector("[data-cart-count]");
         if (!navButton) return;
-        const count = cartStore.getState().getCount();
+        const count = cartCount.get();
         navButton.classList.toggle("is-full", count > 0);
+        navButton.classList.toggle("btn-primary", count > 0);
+        navButton.classList.toggle("btn-secondary", count === 0);
         navButton.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
         if (badge) {
           badge.textContent = String(count);
@@ -111,7 +113,18 @@ const getStockLabel = (stock: number): string => {
         }
       };
 
-      cartStore.subscribe(renderCartCount);
+      const renderFavoritesBadge = () => {
+        const favButton = document.querySelector("[data-favorites-button]");
+        const badge = document.querySelector("[data-favorites-count]");
+        if (!favButton) return;
+        const count = favoriteIds.get().length;
+        favButton.classList.toggle("is-full", count > 0);
+        favButton.classList.toggle("btn-primary", count > 0);
+        favButton.classList.toggle("btn-secondary", count === 0);
+      };
+
+      cartCount.subscribe(renderCartCount);
+      favoriteIds.subscribe(renderFavoritesBadge);
 
       const applyVisibility = () => {
         const favorites = new Set(getFavorites());
@@ -132,7 +145,7 @@ const getStockLabel = (stock: number): string => {
           if (cartBtn) {
             const stock = Number(cartBtn.dataset.stock || "0");
             if (stock <= 0) return;
-            cartStore.getState().addItem(
+            addToCart(
               {
                 id: cartBtn.dataset.id,
                 slug: cartBtn.dataset.slug,
@@ -143,6 +156,7 @@ const getStockLabel = (stock: number): string => {
               },
               1
             );
+            showToast("Agregado al carrito", "success", "cart");
             const label = cartBtn.querySelector("span:last-child");
             if (label) label.textContent = "Agregado";
             return;

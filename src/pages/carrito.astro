@@ -60,7 +60,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
   <script>
     // @ts-nocheck
     import { formatArs } from "../utils/format";
-    import { cartStore } from "../store/cart";
+    import { cartItems, cartCount, updateCartQty, removeFromCart } from "../store/cart";
 
     const list = document.getElementById("cart-list");
     const empty = document.getElementById("cart-empty");
@@ -78,8 +78,10 @@ const footerWhatsappUrl = buildWhatsAppUrl(
     const renderCartCount = () => {
       const badge = document.querySelector("[data-cart-count]");
       if (!navButton) return;
-      const count = cartStore.getState().getCount();
+      const count = cartCount.get();
       navButton.classList.toggle("is-full", count > 0);
+      navButton.classList.toggle("btn-primary", count > 0);
+      navButton.classList.toggle("btn-secondary", count === 0);
       navButton.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
       if (badge) {
         badge.textContent = String(count);
@@ -88,8 +90,15 @@ const footerWhatsappUrl = buildWhatsAppUrl(
     };
 
     const render = () => {
-      const items = cartStore.getState().items;
+      const items = cartItems.get();
       list.innerHTML = "";
+
+      if (!items.length) {
+        empty.hidden = false;
+        summary.hidden = true;
+        renderCartCount();
+        return;
+      }
 
       if (!items.length) {
         empty.hidden = false;
@@ -121,34 +130,34 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
         article.querySelector('[data-action="minus"]').addEventListener("click", () => {
           if (item.qty <= 1) {
-            cartStore.getState().removeItem(item.id);
+            removeFromCart(item.id);
           } else {
-            cartStore.getState().updateQty(item.id, item.qty - 1);
+            updateCartQty(item.id, item.qty - 1);
           }
           render();
         });
 
         article.querySelector('[data-action="plus"]').addEventListener("click", () => {
-          cartStore.getState().updateQty(item.id, item.qty + 1);
+          updateCartQty(item.id, item.qty + 1);
           render();
         });
 
         article.querySelector('[data-action="remove"]').addEventListener("click", () => {
-          cartStore.getState().removeItem(item.id);
+          removeFromCart(item.id);
           render();
         });
 
         list.appendChild(article);
       });
 
-      const count = cartStore.getState().getCount();
-      const total = cartStore.getState().getTotal();
+      const count = cartCount.get();
+      const total = cartItems.get().reduce((acc, item) => acc + item.qty * item.price, 0);
       countNode.textContent = String(count);
       totalNode.textContent = formatArs(total);
       renderCartCount();
     };
 
-    cartStore.subscribe(render);
+    cartItems.subscribe(render);
     render();
   </script>
 </BaseLayout>

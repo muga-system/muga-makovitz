@@ -75,7 +75,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
   <script>
     // @ts-nocheck
-    import { cartStore } from "../store/cart";
+    import { cartItems, cartCount } from "../store/cart";
     import { buildCheckoutMessage } from "../utils/checkoutToWhatsapp";
     import { formatArs } from "../utils/format";
     import { buildWhatsAppUrl } from "../utils/whatsapp";
@@ -89,8 +89,10 @@ const footerWhatsappUrl = buildWhatsAppUrl(
     const renderCartCount = () => {
       const badge = document.querySelector("[data-cart-count]");
       if (!navButton) return;
-      const count = cartStore.getState().getCount();
+      const count = cartCount.get();
       navButton.classList.toggle("is-full", count > 0);
+      navButton.classList.toggle("btn-primary", count > 0);
+      navButton.classList.toggle("btn-secondary", count === 0);
       navButton.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
       if (badge) {
         badge.textContent = String(count);
@@ -98,7 +100,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
       }
     };
 
-    const items = cartStore.getState().items;
+    const items = cartItems.get();
     if (!items.length) {
       summaryNode.innerHTML = '<h2>Resumen</h2><p class="cart-empty">No hay productos en carrito. <a href="/tienda">Ir a tienda</a></p>';
     } else {
@@ -108,7 +110,8 @@ const footerWhatsappUrl = buildWhatsAppUrl(
             `<div class="checkout-item"><span>${item.qty}x ${item.name}</span><strong>${formatArs(item.qty * item.price)}</strong></div>`
         )
         .join("");
-      totalNode.textContent = formatArs(cartStore.getState().getTotal());
+      const total = items.reduce((acc, item) => acc + item.qty * item.price, 0);
+      totalNode.textContent = formatArs(total);
     }
 
     form.addEventListener("submit", (event) => {
@@ -119,7 +122,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
       const notes = String(payload.get("notes") || "").trim();
 
       if (!customerName || !customerPhone) return;
-      const cart = cartStore.getState().items;
+      const cart = cartItems.get();
       if (!cart.length) return;
 
       const message = buildCheckoutMessage({

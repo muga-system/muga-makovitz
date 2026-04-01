@@ -163,40 +163,14 @@ const { title, description, canonical, ogImage } = Astro.props;
         }, 3000);
       };
 
-      const syncFavoritesBadge = () => {
-        const favButton = document.querySelector("[data-favorites-button]");
-        if (!favButton) return;
-        const badge = document.querySelector("[data-favorites-count]");
-        const raw = window.localStorage.getItem("nora_makovitz_favorites_v1");
-        let count = 0;
-        try {
-          const favs = raw ? JSON.parse(raw) : [];
-          count = Array.isArray(favs) ? favs.length : 0;
-        } catch {
-          count = 0;
-        }
-        favButton.classList.toggle("is-full", count > 0);
-        favButton.classList.toggle("btn-primary", count > 0);
-        favButton.classList.toggle("btn-secondary", count === 0);
-        favButton.setAttribute("aria-label", count > 0 ? `Favoritos (${count})` : "Favoritos vacío");
-        if (badge) {
-          badge.textContent = String(count);
-          badge.hidden = count === 0;
-        }
-      };
+      import { cartCount, cartItems } from "../store/cart";
+      import { favoritesCount, favoriteIds } from "../store/favorites";
 
       const syncCartBadge = () => {
         const button = document.querySelector("[data-cart-button]");
-        if (!button) return;
         const badge = document.querySelector("[data-cart-count]");
-        const raw = window.localStorage.getItem("nora_makovitz_cart_v1");
-        let count = 0;
-        try {
-          const cart = raw ? JSON.parse(raw) : [];
-          count = Array.isArray(cart) ? cart.reduce((acc, item) => acc + (item.qty || 0), 0) : 0;
-        } catch {
-          count = 0;
-        }
+        if (!button) return;
+        const count = cartCount.get();
         button.classList.toggle("is-full", count > 0);
         button.classList.toggle("btn-primary", count > 0);
         button.classList.toggle("btn-secondary", count === 0);
@@ -207,14 +181,29 @@ const { title, description, canonical, ogImage } = Astro.props;
         }
       };
 
-      window.addEventListener("storage", syncFavoritesBadge);
-      window.addEventListener("storage", syncCartBadge);
-      syncFavoritesBadge();
+      const syncFavoritesBadge = () => {
+        const favButton = document.querySelector("[data-favorites-button]");
+        const badge = document.querySelector("[data-favorites-count]");
+        if (!favButton) return;
+        const count = favoriteIds.get().length;
+        favButton.classList.toggle("is-full", count > 0);
+        favButton.classList.toggle("btn-primary", count > 0);
+        favButton.classList.toggle("btn-secondary", count === 0);
+        favButton.setAttribute("aria-label", count > 0 ? `Favoritos (${count})` : "Favoritos vacío");
+        if (badge) {
+          badge.textContent = String(count);
+          badge.hidden = count === 0;
+        }
+      };
+
+      cartCount.subscribe(syncCartBadge);
+      favoriteIds.subscribe(syncFavoritesBadge);
       syncCartBadge();
+      syncFavoritesBadge();
 
       document.addEventListener("astro:page-load", () => {
-        syncFavoritesBadge();
         syncCartBadge();
+        syncFavoritesBadge();
       });
 
       const track = (eventName, payload = {}) => {

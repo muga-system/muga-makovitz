@@ -113,8 +113,8 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
   <script>
     // @ts-nocheck
-    import { cartStore } from "../../store/cart";
-    import { toggleFavorite, isFavorite } from "../../store/favorites";
+    import { cartCount, addToCart } from "../../store/cart";
+    import { toggleFavorite, isFavorite, favoriteIds } from "../../store/favorites";
     import { filterStore } from "../../store/filter";
     import { createIcons, ShoppingCart } from "lucide";
 
@@ -124,8 +124,10 @@ const footerWhatsappUrl = buildWhatsAppUrl(
       const navButton = document.querySelector("[data-cart-button]");
       const badge = document.querySelector("[data-cart-count]");
       if (!navButton) return;
-      const count = cartStore.getState().getCount();
+      const count = cartCount.get();
       navButton.classList.toggle("is-full", count > 0);
+      navButton.classList.toggle("btn-primary", count > 0);
+      navButton.classList.toggle("btn-secondary", count === 0);
       navButton.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
       if (badge) {
         badge.textContent = String(count);
@@ -133,7 +135,18 @@ const footerWhatsappUrl = buildWhatsAppUrl(
       }
     };
 
-    cartStore.subscribe(renderCartCount);
+    const renderFavoritesBadge = () => {
+      const favButton = document.querySelector("[data-favorites-button]");
+      const badge = document.querySelector("[data-favorites-count]");
+      if (!favButton) return;
+      const count = favoriteIds.get().length;
+      favButton.classList.toggle("is-full", count > 0);
+      favButton.classList.toggle("btn-primary", count > 0);
+      favButton.classList.toggle("btn-secondary", count === 0);
+    };
+
+    cartCount.subscribe(renderCartCount);
+    favoriteIds.subscribe(renderFavoritesBadge);
 
     const updateFavoriteLabels = () => {
       document.querySelectorAll(".add-favorite").forEach((btn) => {
@@ -206,7 +219,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
             const stock = Number(cartButton.dataset.stock || "0");
             if (stock <= 0) return;
 
-            cartStore.getState().addItem(
+            addToCart(
               {
                 id: cartButton.dataset.id,
                 slug: cartButton.dataset.slug,
@@ -228,8 +241,8 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
           const favButton = event.target.closest(".add-favorite");
           if (favButton) {
-            const isFav = toggleFavorite(favButton.dataset.id);
-            showToast(isFav.includes(favButton.dataset.id) ? "Guardado en favoritos" : "Eliminado de favoritos", "success", "heart");
+            toggleFavorite(favButton.dataset.id);
+            showToast(isFavorite(favButton.dataset.id) ? "Guardado en favoritos" : "Eliminado de favoritos", "success", "heart");
             updateFavoriteLabels();
             const btn = favButton.closest("button");
             if (btn) {

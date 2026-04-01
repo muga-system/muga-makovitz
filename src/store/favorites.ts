@@ -1,32 +1,32 @@
-import { createStore } from 'zustand/vanilla';
-import { persist } from 'zustand/middleware';
+import { atom } from 'nanostores';
+import { persistentAtom } from '@nanostores/persistent';
 
-type FavoritesState = {
-  ids: string[];
-  add: (id: string) => void;
-  remove: (id: string) => void;
-  toggle: (id: string) => void;
-  has: (id: string) => boolean;
-};
+export const favoriteIds = persistentAtom<string[]>('nora_makovitz_favorites_v1', [], {
+  encode: JSON.stringify,
+  decode: JSON.parse,
+});
 
-export const favoritesStore = createStore<FavoritesState>()(
-  persist(
-    (set, get) => ({
-      ids: [],
-      add: (id) => set((state) => ({ ids: state.ids.includes(id) ? state.ids : [...state.ids, id] })),
-      remove: (id) => set((state) => ({ ids: state.ids.filter((i) => i !== id) })),
-      toggle: (id) => {
-        const current = get().ids;
-        const next = current.includes(id) ? current.filter((i) => i !== id) : [...current, id];
-        set({ ids: next });
-      },
-      has: (id) => get().ids.includes(id),
-    }),
-    { name: 'nora_makovitz_favorites_v1' }
-  )
-);
+export const favoritesCount = atom<number>(0);
 
-export const isFavorite = (id: string): boolean => favoritesStore.getState().has(id);
-export const toggleFavorite = (id: string) => favoritesStore.getState().toggle(id);
-export const getFavorites = (): string[] => favoritesStore.getState().ids;
-export const removeFavorite = (id: string) => favoritesStore.getState().remove(id);
+export function updateFavoritesCount() {
+  favoritesCount.set(favoriteIds.get().length);
+}
+
+favoriteIds.subscribe(updateFavoritesCount);
+
+export function isFavorite(id: string): boolean {
+  return favoriteIds.get().includes(id);
+}
+
+export function toggleFavorite(id: string) {
+  const current = favoriteIds.get();
+  if (current.includes(id)) {
+    favoriteIds.set(current.filter(i => i !== id));
+  } else {
+    favoriteIds.set([...current, id]);
+  }
+}
+
+export function removeFavorite(id: string) {
+  favoriteIds.set(favoriteIds.get().filter(i => i !== id));
+}
