@@ -88,7 +88,7 @@ const getStockLabel = (stock: number): string => {
 
   <script>
     // @ts-nocheck
-    import { addToCart, getCartTotals } from "../store/cart";
+    import { cartStore } from "../store/cart";
     import { getFavorites, removeFavorite } from "../store/favorites";
 
     const initFavoritesPage = () => {
@@ -102,14 +102,16 @@ const getStockLabel = (stock: number): string => {
       const renderCartCount = () => {
         const badge = document.querySelector("[data-cart-count]");
         if (!navButton) return;
-        const totals = getCartTotals();
-        navButton.classList.toggle("is-full", totals.count > 0);
-        navButton.setAttribute("aria-label", totals.count > 0 ? `Carrito con ${totals.count} productos` : "Carrito vacio");
+        const count = cartStore.getState().getCount();
+        navButton.classList.toggle("is-full", count > 0);
+        navButton.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
         if (badge) {
-          badge.textContent = String(totals.count);
-          badge.hidden = totals.count === 0;
+          badge.textContent = String(count);
+          badge.hidden = count === 0;
         }
       };
+
+      cartStore.subscribe(renderCartCount);
 
       const applyVisibility = () => {
         const favorites = new Set(getFavorites());
@@ -130,7 +132,7 @@ const getStockLabel = (stock: number): string => {
           if (cartBtn) {
             const stock = Number(cartBtn.dataset.stock || "0");
             if (stock <= 0) return;
-            addToCart(
+            cartStore.getState().addItem(
               {
                 id: cartBtn.dataset.id,
                 slug: cartBtn.dataset.slug,
@@ -141,7 +143,6 @@ const getStockLabel = (stock: number): string => {
               },
               1
             );
-            renderCartCount();
             const label = cartBtn.querySelector("span:last-child");
             if (label) label.textContent = "Agregado";
             return;

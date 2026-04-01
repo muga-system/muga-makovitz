@@ -196,9 +196,7 @@ const { title, description, canonical, ogImage } = Astro.props;
         const button = document.querySelector("[data-cart-button]");
         if (!button) return;
         const badge = document.querySelector("[data-cart-count]");
-        const raw =
-          window.localStorage.getItem("nora_makovitz_cart_v1") ??
-          window.localStorage.getItem("babushka_cart_v1");
+        const raw = window.localStorage.getItem("nora_makovitz_cart_v1");
         let count = 0;
         try {
           const cart = raw ? JSON.parse(raw) : [];
@@ -210,20 +208,15 @@ const { title, description, canonical, ogImage } = Astro.props;
         button.classList.toggle("is-full", count > 0);
         button.classList.toggle("btn-primary", count > 0);
         button.classList.toggle("btn-secondary", count === 0);
-        button.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacio");
+        button.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
         if (badge) {
           badge.textContent = String(count);
           badge.hidden = count === 0;
         }
       };
 
-      const runLayoutEnhancements = () => {
-        syncCartBadge();
-        syncFavoritesBadge();
-      };
-
-      runLayoutEnhancements();
-      document.addEventListener("astro:page-load", runLayoutEnhancements);
+      window.addEventListener("storage", syncCartBadge);
+      syncCartBadge();
 
       const track = (eventName, payload = {}) => {
         const detail = { eventName, ...payload, ts: Date.now() };

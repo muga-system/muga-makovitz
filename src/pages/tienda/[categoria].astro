@@ -113,7 +113,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
   <script>
     // @ts-nocheck
-    import { addToCart, getCartTotals } from "../../store/cart";
+    import { cartStore } from "../../store/cart";
     import { toggleFavorite, isFavorite } from "../../store/favorites";
     import { filterStore } from "../../store/filter";
     import { createIcons, ShoppingCart } from "lucide";
@@ -124,14 +124,16 @@ const footerWhatsappUrl = buildWhatsAppUrl(
       const navButton = document.querySelector("[data-cart-button]");
       const badge = document.querySelector("[data-cart-count]");
       if (!navButton) return;
-      const totals = getCartTotals();
-      navButton.classList.toggle("is-full", totals.count > 0);
-      navButton.setAttribute("aria-label", totals.count > 0 ? `Carrito con ${totals.count} productos` : "Carrito vacio");
+      const count = cartStore.getState().getCount();
+      navButton.classList.toggle("is-full", count > 0);
+      navButton.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
       if (badge) {
-        badge.textContent = String(totals.count);
-        badge.hidden = totals.count === 0;
+        badge.textContent = String(count);
+        badge.hidden = count === 0;
       }
     };
+
+    cartStore.subscribe(renderCartCount);
 
     const updateFavoriteLabels = () => {
       document.querySelectorAll(".add-favorite").forEach((btn) => {
@@ -204,7 +206,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
             const stock = Number(cartButton.dataset.stock || "0");
             if (stock <= 0) return;
 
-            addToCart(
+            cartStore.getState().addItem(
               {
                 id: cartButton.dataset.id,
                 slug: cartButton.dataset.slug,
@@ -215,7 +217,6 @@ const footerWhatsappUrl = buildWhatsAppUrl(
               },
               1
             );
-            renderCartCount();
             showToast("Agregado al carrito", "success", "cart");
             const btn = cartButton.closest("button");
             if (btn) {
