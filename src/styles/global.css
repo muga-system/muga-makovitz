@@ -294,6 +294,19 @@ a {
   display: block;
 }
 
+.nav-cart.is-full,
+.nav-cart.btn-primary {
+  background: var(--primary) !important;
+  color: #fff !important;
+  border-color: var(--primary) !important;
+}
+
+.nav-cart.is-full:hover,
+.nav-cart.btn-primary:hover {
+  background: var(--primary-strong) !important;
+  border-color: var(--primary-strong) !important;
+}
+
 .nav-cart svg {
   width: 22px;
   height: 22px;
