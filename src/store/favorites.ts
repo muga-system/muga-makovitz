@@ -1,36 +1,32 @@
-const FAVORITES_KEY = "nora_makovitz_favorites_v1";
+import { createStore } from 'zustand/vanilla';
+import { persist } from 'zustand/middleware';
 
-const safeParse = (raw: string | null): string[] => {
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw) as string[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+type FavoritesState = {
+  ids: string[];
+  add: (id: string) => void;
+  remove: (id: string) => void;
+  toggle: (id: string) => void;
+  has: (id: string) => boolean;
 };
 
-export const getFavorites = (): string[] => {
-  if (typeof window === "undefined") return [];
-  return safeParse(window.localStorage.getItem(FAVORITES_KEY));
-};
+export const favoritesStore = createStore<FavoritesState>()(
+  persist(
+    (set, get) => ({
+      ids: [],
+      add: (id) => set((state) => ({ ids: state.ids.includes(id) ? state.ids : [...state.ids, id] })),
+      remove: (id) => set((state) => ({ ids: state.ids.filter((i) => i !== id) })),
+      toggle: (id) => {
+        const current = get().ids;
+        const next = current.includes(id) ? current.filter((i) => i !== id) : [...current, id];
+        set({ ids: next });
+      },
+      has: (id) => get().ids.includes(id),
+    }),
+    { name: 'nora_makovitz_favorites_v1' }
+  )
+);
 
-const saveFavorites = (ids: string[]) => {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(ids));
-};
-
-export const isFavorite = (id: string): boolean => getFavorites().includes(id);
-
-export const toggleFavorite = (id: string) => {
-  const current = getFavorites();
-  const next = current.includes(id) ? current.filter((item) => item !== id) : [...current, id];
-  saveFavorites(next);
-  return next;
-};
-
-export const removeFavorite = (id: string) => {
-  const next = getFavorites().filter((item) => item !== id);
-  saveFavorites(next);
-  return next;
-};
+export const isFavorite = (id: string): boolean => favoritesStore.getState().has(id);
+export const toggleFavorite = (id: string) => favoritesStore.getState().toggle(id);
+export const getFavorites = (): string[] => favoritesStore.getState().ids;
+export const removeFavorite = (id: string) => favoritesStore.getState().remove(id);

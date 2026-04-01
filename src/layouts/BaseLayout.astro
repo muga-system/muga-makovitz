@@ -167,9 +167,7 @@ const { title, description, canonical, ogImage } = Astro.props;
         const favButton = document.querySelector("[data-favorites-button]");
         if (!favButton) return;
         const badge = document.querySelector("[data-favorites-count]");
-        const raw =
-          window.localStorage.getItem("nora_makovitz_favorites_v1") ??
-          window.localStorage.getItem("babushka_favorites_v1");
+        const raw = window.localStorage.getItem("nora_makovitz_favorites_v1");
         let count = 0;
         try {
           const favs = raw ? JSON.parse(raw) : [];
@@ -178,19 +176,17 @@ const { title, description, canonical, ogImage } = Astro.props;
           count = 0;
         }
         favButton.classList.toggle("is-full", count > 0);
-        favButton.setAttribute("aria-label", count > 0 ? `Favoritos (${count})` : "Favoritos vacio");
+        favButton.classList.toggle("btn-primary", count > 0);
+        favButton.classList.toggle("btn-secondary", count === 0);
+        favButton.setAttribute("aria-label", count > 0 ? `Favoritos (${count})` : "Favoritos vacío");
         if (badge) {
           badge.textContent = String(count);
           badge.hidden = count === 0;
         }
-        if (count > 0) {
-          favButton.classList.add("btn-primary");
-          favButton.classList.remove("btn-secondary");
-        } else {
-          favButton.classList.remove("btn-primary");
-          favButton.classList.add("btn-secondary");
-        }
       };
+
+      window.addEventListener("storage", syncFavoritesBadge);
+      syncFavoritesBadge();
 
       const syncCartBadge = () => {
         const button = document.querySelector("[data-cart-button]");
