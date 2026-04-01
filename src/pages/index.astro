@@ -54,10 +54,10 @@ const footerWhatsappUrl = buildWhatsAppUrl(
         <div class="grid-12 cards-grid categories-grid">
           {
             categoryItems.map((item) => (
-              <div class="col-span-12 sm-col-span-6 lg-col-span-3">
+              <div class={"col-span-12 sm-col-span-6 lg-col-span-3" + (item.slug !== "bolsos" ? " category-coming-soon" : "")}>
                 <CategoryCard
                   item={item}
-                  ctaUrl={`/tienda/${item.slug}`}
+                  ctaUrl={item.slug !== "bolsos" ? "#" : `/tienda/${item.slug}`}
                 />
               </div>
             ))

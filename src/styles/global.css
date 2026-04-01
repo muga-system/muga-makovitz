@@ -457,6 +457,48 @@ a {
   border-top: 1px solid var(--border);
 }
 
+.category-coming-soon {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.category-coming-soon .category-card::before {
+  content: "Pronto";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--surface);
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  z-index: 1;
+}
+
+.category-coming-soon .category-card {
+  position: relative;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    var(--border) 6px,
+    var(--border) 7px
+  ) !important;
+  background-size: 10px 10px !important;
+}
+
+.category-coming-soon .category-card .btn-secondary {
+  opacity: 0.5;
+}
+
+.category-coming-soon .category-card:hover .btn-secondary,
+.category-coming-soon .category-card:hover .btn-secondary:hover {
+  background: var(--secondary-soft);
+  border-color: var(--border);
+}
+
 .section-collection {
   padding-top: var(--space-12);
 }
@@ -657,6 +699,17 @@ a {
 .section-collection .category-card:hover .btn-secondary:hover {
   background: color-mix(in srgb, var(--primary-soft) 60%, var(--primary) 40%);
   border-color: color-mix(in srgb, var(--border) 35%, var(--primary) 65%);
+}
+
+.category-coming-soon .category-card:hover {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    var(--border) 6px,
+    var(--border) 7px
+  ) !important;
+  background-size: 10px 10px !important;
 }
 
 .category-icon {

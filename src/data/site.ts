@@ -23,7 +23,7 @@ export const siteConfig = {
   brand: "Nora Makovitz",
   assets: {
     logo: "/logo.png",
-    heroImage: "/2.png"
+    heroImage: "/bolso-simple/original.png"
   },
   instagram: "https://instagram.com/nora.makovitz",
   instagramHandle: "@nora.makovitz",
@@ -36,15 +36,14 @@ export const siteConfig = {
     ogImage: "/og-babushka.svg"
   },
   hero: {
-    heading: "Bolsos y carteras de tela hechos a mano",
-    subtext: "Disenados para acompanarte todos los dias",
-    reinforcement: "Resistentes, simples y durables",
-    primaryCta: "Ver coleccion",
-    secondaryCta: "Elegir modelo"
+    heading: "Bolso Ligero",
+    subtext: "Disenado para acompanarte todos los dias",
+    reinforcement: "Tela resistente, estampa unica, hecho a mano",
+    primaryCta: "Comprar ahora",
+    secondaryCta: "Ver detalles"
   },
   navLinks: [
-    { label: "Tienda", href: "/tienda" },
-    { label: "Favoritos", href: "/favoritos" },
+    { label: "Tienda", href: "/" },
     { label: "Carrito", href: "/carrito" }
   ]
 };
@@ -81,25 +80,37 @@ export const categoryItems: CategoryItem[] = [
 ];
 
 export const featuredProducts: Product[] = [
-  { name: "Bolso grande de tela resistente", price: "$31.000", slug: "bolso-grande-tela-resistente", image: "/2.png" },
-  { name: "Cartera chica de tela", price: "$24.000", slug: "cartera-chica-tela", image: "/2.png" },
-  { name: "Bolso mediano de tela", price: "$28.000", slug: "bolso-mediano-de-tela", image: "/2.png" }
+  { name: "Bolso Ligero - Original", price: "$28.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.png" },
+  { name: "Bolso Ligero - Fresh", price: "$28.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.png" },
+  { name: "Bolso Ligero - Chic", price: "$28.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.png" },
+  { name: "Bolso Ligero - Organic", price: "$28.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.png" },
+  { name: "Bolso Ligero - Magnolia", price: "$28.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.png" }
 ];
 
 export const weeklyWorks: WeeklyWork[] = [
   {
-    title: "Proceso real",
-    note: "Cada pieza se trabaja a mano, sin produccion en serie.",
-    image: "/2.png"
+    title: "Original",
+    note: "El clasico atemporal",
+    image: "/bolso-simple/original.png"
   },
   {
-    title: "Expectativa clara",
-    note: "Las variaciones leves forman parte del trabajo artesanal.",
-    image: "/2.png"
+    title: "Fresh",
+    note: "Energia y vitalidad",
+    image: "/bolso-simple/fresh.png"
   },
   {
-    title: "Transparencia",
-    note: "Produccion limitada segun disponibilidad de trabajo.",
-    image: "/2.png"
+    title: "Chic",
+    note: "Elegancia moderna",
+    image: "/bolso-simple/chic.png"
+  },
+  {
+    title: "Organic",
+    note: "Naturaleza pura",
+    image: "/bolso-simple/organic.png"
+  },
+  {
+    title: "Magnolia",
+    note: "Delicadeza floral",
+    image: "/bolso-simple/magnolia.png"
   }
 ];
