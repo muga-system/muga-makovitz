@@ -60,7 +60,7 @@ const footerWhatsappUrl = buildWhatsAppUrl(
   <script>
     // @ts-nocheck
     import { formatArs } from "../utils/format";
-    import { getCart, updateCartQty, removeFromCart, getCartTotals } from "../store/cart";
+    import { cartStore } from "../store/cart";
 
     const list = document.getElementById("cart-list");
     const empty = document.getElementById("cart-empty");
@@ -71,24 +71,24 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
     const getStockLabel = (stock) => {
       if (stock <= 0) return "Sin stock";
-      if (stock <= 2) return `Ultimas unidades (${stock})`;
+      if (stock <= 2) return `Últimas unidades (${stock})`;
       return `Disponible (${stock})`;
     };
 
     const renderCartCount = () => {
       const badge = document.querySelector("[data-cart-count]");
       if (!navButton) return;
-      const totals = getCartTotals();
-      navButton.classList.toggle("is-full", totals.count > 0);
-      navButton.setAttribute("aria-label", totals.count > 0 ? `Carrito con ${totals.count} productos` : "Carrito vacio");
+      const count = cartStore.getState().getCount();
+      navButton.classList.toggle("is-full", count > 0);
+      navButton.setAttribute("aria-label", count > 0 ? `Carrito con ${count} productos` : "Carrito vacío");
       if (badge) {
-        badge.textContent = String(totals.count);
-        badge.hidden = totals.count === 0;
+        badge.textContent = String(count);
+        badge.hidden = count === 0;
       }
     };
 
     const render = () => {
-      const items = getCart();
+      const items = cartStore.getState().items;
       list.innerHTML = "";
 
       if (!items.length) {
@@ -121,32 +121,34 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 
         article.querySelector('[data-action="minus"]').addEventListener("click", () => {
           if (item.qty <= 1) {
-            removeFromCart(item.id);
+            cartStore.getState().removeItem(item.id);
           } else {
-            updateCartQty(item.id, item.qty - 1);
+            cartStore.getState().updateQty(item.id, item.qty - 1);
           }
           render();
         });
 
         article.querySelector('[data-action="plus"]').addEventListener("click", () => {
-          updateCartQty(item.id, item.qty + 1);
+          cartStore.getState().updateQty(item.id, item.qty + 1);
           render();
         });
 
         article.querySelector('[data-action="remove"]').addEventListener("click", () => {
-          removeFromCart(item.id);
+          cartStore.getState().removeItem(item.id);
           render();
         });
 
         list.appendChild(article);
       });
 
-      const totals = getCartTotals();
-      countNode.textContent = String(totals.count);
-      totalNode.textContent = formatArs(totals.total);
+      const count = cartStore.getState().getCount();
+      const total = cartStore.getState().getTotal();
+      countNode.textContent = String(count);
+      totalNode.textContent = formatArs(total);
       renderCartCount();
     };
 
+    cartStore.subscribe(render);
     render();
   </script>
 </BaseLayout>
