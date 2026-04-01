@@ -340,6 +340,19 @@ a {
   border-color: var(--bg);
 }
 
+.nav-favorites.is-full,
+.nav-favorites.btn-primary {
+  background: var(--primary) !important;
+  color: #fff !important;
+  border-color: var(--primary) !important;
+}
+
+.nav-favorites.is-full:hover,
+.nav-favorites.btn-primary:hover {
+  background: var(--primary-strong) !important;
+  border-color: var(--primary-strong) !important;
+}
+
 .cart-count,
 .favorites-count {
   position: absolute;
