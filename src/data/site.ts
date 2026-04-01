@@ -36,9 +36,9 @@ export const siteConfig = {
     ogImage: "/og-babushka.svg"
   },
   hero: {
-    heading: "Bolso Ligero",
-    subtext: "Disenado para acompanarte todos los dias",
-    reinforcement: "Tela resistente, estampa unica, hecho a mano",
+    heading: "Nora Makovitz",
+    subtext: "Bolso Ligero: diseñado para acompañarte todos los días",
+    reinforcement: "Tela resistente, estampa única, hecho a mano",
     primaryCta: "Comprar ahora",
     secondaryCta: "Ver detalles"
   },
