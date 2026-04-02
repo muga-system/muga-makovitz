@@ -138,13 +138,18 @@ a {
   align-items: center;
   justify-content: center;
   height: 44px;
-  padding: 0;
 }
 
 .nav-favorites,
 .nav-cart {
   width: 44px;
+  padding: 0;
   position: relative;
+}
+
+.nav-tienda {
+  gap: 0.375rem;
+  padding: 0 1rem;
 }
 
 .cart-count,
@@ -299,6 +304,75 @@ a {
   border-radius: 999px;
   background: var(--color-secondary-soft);
   color: var(--color-text);
+}
+
+.featured-card {
+  gap: 1.1rem;
+  padding: 1rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  box-shadow: none;
+}
+
+.featured-card:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+.featured-image-link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.featured-image {
+  border-radius: 16px;
+  transition: transform 0.32s ease;
+}
+
+.featured-card:hover .featured-image {
+  transform: scale(1.03);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: color-mix(in srgb, var(--color-primary-soft) 80%, white 20%);
+  border: 1px solid var(--color-border);
+}
+
+.featured-content {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.featured-kicker {
+  width: fit-content;
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.featured-title {
+  line-height: 1.15;
+}
+
+.featured-variant {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+}
+
+.featured-price {
+  margin-top: 0.25rem;
+  letter-spacing: 0.06em;
+}
+
+.featured-cta {
+  width: 100%;
 }
 
 .shop-grid {

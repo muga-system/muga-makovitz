@@ -31,7 +31,7 @@ export default function Navbar() {
             </Link>
             <Link href="/tienda" className="btn btn-primary nav-tienda">
               <Store size={18} />
-              <span className="tienda-label" style={{ marginLeft: "0.375rem" }}>Tienda</span>
+              <span className="tienda-label">Tienda</span>
             </Link>
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function Navbar() {
           </Link>
           <Link href="/tienda" className="btn btn-primary nav-tienda">
             <Store size={18} />
-            <span className="tienda-label" style={{ marginLeft: "0.375rem" }}>Tienda</span>
+            <span className="tienda-label">Tienda</span>
           </Link>
         </div>
       </div>
