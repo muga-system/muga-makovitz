@@ -25,7 +25,7 @@ export default function TiendaPage() {
               <p className="section-subtitle">Todos los modelos disponibles</p>
             </div>
 
-            <div style={{ display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+            <div className="shop-products-grid">
               {activeProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

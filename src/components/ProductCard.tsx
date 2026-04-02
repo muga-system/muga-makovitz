@@ -46,54 +46,42 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <article className="product-card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      <div style={{ position: "relative" }}>
-        <Link href={`/producto/${product.slug}`} className="shop-image-link">
+    <article className="product-card shop-card">
+      <div className="shop-media">
+        <Link href={`/producto/${product.slug}`} className="shop-image-link" aria-label={`Ver ${product.name}`}>
           <Image
             src={product.images[0]}
             alt={product.name}
-            className="card-image card-image-product"
-            style={{ aspectRatio: "1/1" }}
+            className="card-image card-image-product shop-image"
             width={800}
             height={800}
           />
         </Link>
         <button
           onClick={handleToggleFav}
-          className="btn"
-          style={{ 
-            position: "absolute", 
-            top: "0.75rem", 
-            right: "0.75rem",
-            width: "40px",
-            height: "40px",
-            padding: 0,
-            borderRadius: "999px",
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-          }}
+          className="btn shop-fav-btn"
           aria-label={isFav ? "Quitar de favoritos" : "Agregar a favoritos"}
         >
           <Heart size={18} fill={isFav ? "currentColor" : "none"} />
         </button>
       </div>
       
-      <div style={{ flex: 1, display: "grid", gap: "0.5rem" }}>
+      <div className="shop-content">
         <Link href={`/producto/${product.slug}`}>
           <h3 className="card-title">{product.name}</h3>
         </Link>
         <p className="card-price">{formatArs(product.price)}</p>
         
         {product.stock > 0 ? (
-          <p style={{ fontSize: "0.9rem", color: "var(--color-primary-strong)" }}>
+          <p className="shop-stock shop-stock-ok">
             Stock: {product.stock} unidades
           </p>
         ) : (
-          <p style={{ fontSize: "0.9rem", color: "#9d5a5a" }}>Sin stock</p>
+          <p className="shop-stock shop-stock-out">Sin stock</p>
         )}
       </div>
 
-      <div className="shop-actions" style={{ display: "grid", gap: "0.75rem", marginTop: "0.75rem" }}>
+      <div className="shop-actions">
         {product.stock > 0 ? (
           <button
             onClick={handleAddToCart}

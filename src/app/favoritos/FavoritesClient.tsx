@@ -39,46 +39,34 @@ export default function FavoritesClient() {
   return (
     <div style={{ display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
       {favoriteProducts.map((product) => (
-        <article key={product.id} className="product-card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-          <div style={{ position: "relative" }}>
-            <Link href={`/producto/${product.slug}`}>
+        <article key={product.id} className="product-card shop-card favorite-card">
+          <div className="shop-media">
+            <Link href={`/producto/${product.slug}`} className="shop-image-link" aria-label={`Ver ${product.name}`}>
               <Image
                 src={product.images[0]}
                 alt={product.name}
-                className="card-image card-image-product"
-                style={{ aspectRatio: "1/1" }}
+                className="card-image card-image-product shop-image"
                 width={800}
                 height={800}
               />
             </Link>
             <button
               onClick={() => removeFavorite(product.id)}
-              className="btn"
-              style={{ 
-                position: "absolute", 
-                top: "0.75rem", 
-                right: "0.75rem",
-                width: "40px",
-                height: "40px",
-                padding: 0,
-                borderRadius: "999px",
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-              }}
+              className="btn shop-fav-btn"
               aria-label="Quitar de favoritos"
             >
               <Trash2 size={18} />
             </button>
           </div>
           
-          <div style={{ flex: 1, display: "grid", gap: "0.5rem" }}>
+          <div className="shop-content">
             <Link href={`/producto/${product.slug}`}>
               <h3 className="card-title">{product.name}</h3>
             </Link>
             <p className="card-price">{formatArs(product.price)}</p>
           </div>
 
-          <div style={{ display: "grid", gap: "0.75rem", marginTop: "0.75rem" }}>
+          <div className="shop-actions">
             <button
               onClick={() => {
                 addToCart({

@@ -9,7 +9,6 @@ interface CategoryCardProps {
     meta: string;
     cta: string;
     slug: string;
-    image: string;
   };
   ctaUrl: string;
 }

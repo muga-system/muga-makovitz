@@ -3,7 +3,6 @@ export type CategoryItem = {
   meta: string;
   cta: string;
   slug: string;
-  image: string;
 };
 
 export type FeaturedProduct = {
@@ -53,29 +52,25 @@ export const categoryItems: CategoryItem[] = [
     name: "Carteras",
     meta: "Livianas, practicas y faciles de llevar",
     cta: "Elegir modelo",
-    slug: "carteras",
-    image: "/2.webp"
+    slug: "carteras"
   },
   {
     name: "Bolsos",
     meta: "Mayor capacidad para uso diario",
     cta: "Elegir modelo",
-    slug: "bolsos",
-    image: "/2.webp"
+    slug: "bolsos"
   },
   {
     name: "Organizadores",
     meta: "Orden simple para cartera o bolso",
     cta: "Elegir modelo",
-    slug: "organizadores",
-    image: "/2.webp"
+    slug: "organizadores"
   },
   {
     name: "Regalos",
     meta: "Piezas chicas para regalar o uso personal",
     cta: "Elegir modelo",
-    slug: "regalos",
-    image: "/2.webp"
+    slug: "regalos"
   }
 ];
 
@@ -89,28 +84,28 @@ export const featuredProducts: FeaturedProduct[] = [
 
 export const weeklyWorks: WeeklyWork[] = [
   {
-    title: "Original",
-    note: "El clasico atemporal",
+    title: "Elegi categoria",
+    note: "Entra a Tienda y filtra por el tipo de pieza que estas buscando.",
     image: "/bolso-simple/original.webp"
   },
   {
-    title: "Fresh",
-    note: "Energia y vitalidad",
+    title: "Mira detalles",
+    note: "Abri cada producto para revisar fotos, caracteristicas y stock disponible.",
     image: "/bolso-simple/fresh.webp"
   },
   {
-    title: "Chic",
-    note: "Elegancia moderna",
+    title: "Guarda o agrega",
+    note: "Sumalo a favoritos o al carrito para ordenar la decision de compra.",
     image: "/bolso-simple/chic.webp"
   },
   {
-    title: "Organic",
-    note: "Naturaleza pura",
+    title: "Completa checkout",
+    note: "Carga tu nombre y WhatsApp para dejar el pedido listo en un minuto.",
     image: "/bolso-simple/organic.webp"
   },
   {
-    title: "Magnolia",
-    note: "Delicadeza floral",
+    title: "Confirma por WhatsApp",
+    note: "Hace click en consultar por WhatsApp y cerramos disponibilidad, envio y pago.",
     image: "/bolso-simple/magnolia.webp"
   }
 ];

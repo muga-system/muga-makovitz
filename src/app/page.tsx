@@ -83,17 +83,19 @@ export default function Home() {
             <h2 id="weekly-title" className="section-title">Confianza</h2>
             <p className="section-subtitle">Información clara para comprar sin dudas.</p>
 
-            <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+            <ol className="trust-flow" aria-label="Recorrido de compra">
               {weeklyWorks.map((item, index) => (
-                <article key={item.title} style={{ padding: "1.5rem 1rem", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", background: "var(--color-surface)" }}>
-                  <p style={{ width: "42px", height: "42px", marginBottom: "0.75rem", padding: 0, borderRadius: "999px", border: "1px solid var(--color-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--color-text-muted)", fontSize: "0.74rem", letterSpacing: "0.06em" }}>
-                    {String(index + 1).padStart(2, '0')}
-                  </p>
-                  <h3 className="card-title">{item.title}</h3>
-                  <p className="card-meta">{item.note}</p>
-                </article>
+                <li key={item.title} className="trust-step">
+                  <div className="trust-index-wrap">
+                    <p className="trust-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </p>
+                    <span className="trust-tooltip" role="tooltip">{item.note}</span>
+                  </div>
+                  <h3 className="trust-title">{item.title}</h3>
+                </li>
               ))}
-            </div>
+            </ol>
 
             <div style={{ marginTop: "1.5rem" }}>
               <a
