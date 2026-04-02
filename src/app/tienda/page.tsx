@@ -1,4 +1,4 @@
-import { products, categories } from "@/data/products";
+import { products } from "@/data/products";
 import { siteConfig } from "@/data/site";
 import Navbar from "@/components/Navbar";
 import SiteFooter from "@/components/SiteFooter";

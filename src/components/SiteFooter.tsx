@@ -17,7 +17,7 @@ export default function SiteFooter({ brand, instagram, instagramHandle, whatsapp
           <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "auto 1fr", alignItems: "center" }}>
             <span className="site-footer-brand">{brand}</span>
             <nav className="site-footer-nav" aria-label="Footer navigation">
-              <Link href="/">Tienda</Link>
+              <Link href="/tienda">Tienda</Link>
               <Link href="/carrito">Carrito</Link>
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
               <a href={instagram} target="_blank" rel="noopener noreferrer">{instagramHandle}</a>

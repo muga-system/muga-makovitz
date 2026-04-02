@@ -2,22 +2,18 @@
 
 import { useFavoritesStore } from "@/store/favoritesStore";
 import { useCartStore } from "@/store/cartStore";
+import { useFavoritesHydrated } from "@/store/hydration";
 import { products } from "@/data/products";
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, ShoppingCart, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ShoppingCart, Trash2 } from "lucide-react";
 import { formatArs } from "@/utils/format";
 
 export default function FavoritesClient() {
   const favoriteIds = useFavoritesStore((state) => state.ids);
   const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
   const addToCart = useCartStore((state) => state.addToCart);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useFavoritesHydrated();
 
   const favoriteProducts = products.filter(p => favoriteIds.includes(p.id));
 

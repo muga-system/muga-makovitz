@@ -1,7 +1,8 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
-import { useState, useEffect } from "react";
+import { useCartHydrated } from "@/store/hydration";
+import { useState } from "react";
 import { formatArs } from "@/utils/format";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import { siteConfig } from "@/data/site";
@@ -10,14 +11,10 @@ export default function CheckoutClient() {
   const items = useCartStore((state) => state.items);
   const getTotal = useCartStore((state) => state.getTotal);
   const clearCart = useCartStore((state) => state.clearCart);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useCartHydrated();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const total = getTotal();
 
