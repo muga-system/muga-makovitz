@@ -1,67 +1,36 @@
-# Babushka Landing WhatsApp (Astro)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Landing mobile-first para convertir trafico de Instagram en conversaciones de venta por WhatsApp.
+## Getting Started
 
-## Stack
-
-- Astro
-- CSS plano (sin framework)
-
-## Instalacion
-
-```bash
-npm install
-```
-
-## Desarrollo local
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Build produccion
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-npm run build
-npm run preview
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Personalizacion rapida
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Editar `src/data/site.ts`:
+## Learn More
 
-- `whatsappNumber`: numero final en formato internacional (ej: `54911XXXXXXXX`).
-- `instagram` e `instagramHandle`.
-- `seo.title`, `seo.description`, `seo.ogImage`.
-- `messages.general` y `messages.finalCta`.
-- `products`: nombre, descripcion, rango y slug.
-- `testimonials`.
+To learn more about Next.js, take a look at the following resources:
 
-## Estructura principal
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- `src/layouts/BaseLayout.astro`: metadatos SEO + script de tracking.
-- `src/pages/index.astro`: composicion de la landing.
-- `src/components/*`: bloques de interfaz.
-- `src/utils/whatsapp.ts`: armado de links de WhatsApp.
-- `src/styles/global.css`: estilos globales.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Tracking minimo incluido
+## Deploy on Vercel
 
-Eventos por `data-track`:
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- `click_whatsapp_primary`
-- `click_whatsapp_secondary`
-- `click_whatsapp_product_{slug}`
-- `click_instagram`
-
-Actualmente se envian a `window` como evento `analytics` y se registran por `console.log`.
-Puedes conectarlo a tu herramienta de analitica en `BaseLayout.astro`.
-
-## Importante
-
-Este proyecto incluye SUPUESTOS para:
-
-- dominio canonical,
-- imagen OG final.
-
-Reemplazarlos antes de publicar.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
