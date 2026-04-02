@@ -2,9 +2,9 @@
 
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import { useFavoritesHydrated } from "@/store/hydration";
 import { ShoppingCart, Heart } from "lucide-react";
-import { useState, useEffect } from "react";
-import { formatArs } from "@/utils/format";
+import { useState } from "react";
 
 interface ProductDetailClientProps {
   product: {
@@ -20,13 +20,9 @@ interface ProductDetailClientProps {
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const addToCart = useCartStore((state) => state.addToCart);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
-  const [isFav, setIsFav] = useState(false);
+  const isFav = useFavoritesStore((state) => state.ids.includes(product.id));
+  const hydrated = useFavoritesHydrated();
   const [added, setAdded] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleAddToCart = () => {
     addToCart({
@@ -43,10 +39,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   const handleToggleFav = () => {
     toggleFavorite(product.id);
-    setIsFav(!isFav);
   };
 
-  if (!mounted) {
+  if (!hydrated) {
     return (
       <div style={{ display: "grid", gap: "0.75rem", width: "min(100%, 360px)" }}>
         <button className="btn btn-primary" style={{ width: "100%" }} disabled>

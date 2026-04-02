@@ -1,12 +1,11 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
+import { useCartHydrated } from "@/store/hydration";
 import Link from "next/link";
 import Image from "next/image";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
-import { useEffect, useState } from "react";
 import { formatArs } from "@/utils/format";
-import { useRouter } from "next/navigation";
 
 export default function CartClient() {
   const items = useCartStore((state) => state.items);
@@ -14,12 +13,7 @@ export default function CartClient() {
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
   const getTotal = useCartStore((state) => state.getTotal);
-  const [mounted, setMounted] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useCartHydrated();
 
   const total = getTotal();
 

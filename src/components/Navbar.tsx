@@ -3,17 +3,15 @@
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import { useCartHydrated, useFavoritesHydrated } from "@/store/hydration";
 import { ShoppingCart, Heart, Store } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const cartCount = useCartStore((state) => state.getCount());
   const favCount = useFavoritesStore((state) => state.getCount());
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const cartHydrated = useCartHydrated();
+  const favoritesHydrated = useFavoritesHydrated();
+  const mounted = cartHydrated && favoritesHydrated;
 
   if (!mounted) {
     return (
@@ -31,7 +29,7 @@ export default function Navbar() {
               <ShoppingCart size={20} />
               <span className="cart-count" style={{ display: "none" }}>0</span>
             </Link>
-            <Link href="/" className="btn btn-primary nav-tienda">
+            <Link href="/tienda" className="btn btn-primary nav-tienda">
               <Store size={18} />
               <span className="tienda-label" style={{ marginLeft: "0.375rem" }}>Tienda</span>
             </Link>
@@ -65,7 +63,7 @@ export default function Navbar() {
             <ShoppingCart size={20} />
             {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
           </Link>
-          <Link href="/" className="btn btn-primary nav-tienda">
+          <Link href="/tienda" className="btn btn-primary nav-tienda">
             <Store size={18} />
             <span className="tienda-label" style={{ marginLeft: "0.375rem" }}>Tienda</span>
           </Link>
