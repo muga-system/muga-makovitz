@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/store/cartStore";
+import { selectCartItems, selectCartTotal, useCartStore } from "@/store/cartStore";
 import { useCartHydrated } from "@/store/hydration";
 import { useState } from "react";
 import { formatArs } from "@/utils/format";
@@ -8,15 +8,13 @@ import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import { siteConfig } from "@/data/site";
 
 export default function CheckoutClient() {
-  const items = useCartStore((state) => state.items);
-  const getTotal = useCartStore((state) => state.getTotal);
+  const items = useCartStore(selectCartItems);
+  const total = useCartStore(selectCartTotal);
   const clearCart = useCartStore((state) => state.clearCart);
   const mounted = useCartHydrated();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
-
-  const total = getTotal();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +49,7 @@ export default function CheckoutClient() {
 
   if (!mounted) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "var(--color-text-muted)" }}>
+      <div className="state-loading">
         Cargando...
       </div>
     );
@@ -59,29 +57,29 @@ export default function CheckoutClient() {
 
   if (items.length === 0) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", border: "1px dashed var(--color-border)", borderRadius: "var(--radius-sm)", color: "var(--color-text-muted)" }}>
+      <div className="state-empty">
         <p>Tu carrito está vacío.</p>
       </div>
     );
   }
 
   return (
-    <div style={{ display: "grid", gap: "2rem", gridTemplateColumns: "1fr", alignItems: "start" }}>
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "1rem", maxWidth: "500px" }}>
-        <h2 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>Datos de contacto</h2>
+    <div className="checkout-layout">
+      <form onSubmit={handleSubmit} className="checkout-form">
+        <h2 className="checkout-title">Datos de contacto</h2>
         
-        <label style={{ display: "grid", gap: "0.5rem", fontWeight: 500 }}>
+        <label className="checkout-label">
           Nombre completo *
           <input
             type="text"
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={{ width: "100%", borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border)", background: "var(--color-surface)", padding: "0.75rem 0.85rem", font: "inherit" }}
+            className="checkout-input"
           />
         </label>
 
-        <label style={{ display: "grid", gap: "0.5rem", fontWeight: 500 }}>
+        <label className="checkout-label">
           Teléfono (WhatsApp) *
           <input
             type="tel"
@@ -89,41 +87,41 @@ export default function CheckoutClient() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="5491150076209"
-            style={{ width: "100%", borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border)", background: "var(--color-surface)", padding: "0.75rem 0.85rem", font: "inherit" }}
+            className="checkout-input"
           />
         </label>
 
-        <label style={{ display: "grid", gap: "0.5rem", fontWeight: 500 }}>
+        <label className="checkout-label">
           Notas (opcional)
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={3}
-            style={{ width: "100%", borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border)", background: "var(--color-surface)", padding: "0.75rem 0.85rem", font: "inherit", resize: "vertical" }}
+            className="checkout-input checkout-textarea"
           />
         </label>
 
-        <button type="submit" className="btn btn-primary" style={{ marginTop: "0.5rem" }}>
+        <button type="submit" className="btn btn-primary checkout-submit">
           Confirmar pedido por WhatsApp
         </button>
       </form>
 
-      <div style={{ padding: "1.25rem", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", display: "grid", gap: "1rem" }}>
-        <h2 style={{ fontSize: "1.25rem" }}>Resumen del pedido</h2>
+      <div className="checkout-summary">
+        <h2 className="checkout-title">Resumen del pedido</h2>
         
         {items.map((item) => (
-          <div key={item.id} style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", paddingBottom: "0.5rem", borderBottom: "1px solid var(--color-border)" }}>
+          <div key={item.id} className="checkout-summary-item">
             <span>{item.qty}x {item.name}</span>
             <span>{formatArs(item.qty * item.price)}</span>
           </div>
         ))}
 
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "1.08rem", fontWeight: 700 }}>
+        <div className="checkout-summary-total">
           <span>Total</span>
           <span>{formatArs(total)}</span>
         </div>
 
-        <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", marginTop: "0" }}>
+        <p className="checkout-summary-note">
           Envío a coordinar por WhatsApp
         </p>
       </div>

@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useCartStore } from "@/store/cartStore";
-import { useFavoritesStore } from "@/store/favoritesStore";
+import { selectCartCount, useCartStore } from "@/store/cartStore";
+import { selectFavoriteCount, useFavoritesStore } from "@/store/favoritesStore";
 import { useCartHydrated, useFavoritesHydrated } from "@/store/hydration";
 import { ShoppingCart, Heart, Store } from "lucide-react";
 
 export default function Navbar() {
-  const cartCount = useCartStore((state) => state.getCount());
-  const favCount = useFavoritesStore((state) => state.getCount());
+  const cartCount = useCartStore(selectCartCount);
+  const favCount = useFavoritesStore(selectFavoriteCount);
   const cartHydrated = useCartHydrated();
   const favoritesHydrated = useFavoritesHydrated();
   const mounted = cartHydrated && favoritesHydrated;

@@ -6,9 +6,33 @@ interface FavoritesStore {
   addFavorite: (id: string) => void;
   removeFavorite: (id: string) => void;
   toggleFavorite: (id: string) => void;
-  isFavorite: (id: string) => boolean;
-  getCount: () => number;
 }
+
+type PersistedFavoritesState = Pick<FavoritesStore, 'ids'>;
+
+const FAVORITES_STORE_VERSION = 1;
+
+const migrateFavoritesState = (persistedState: unknown, version: number): PersistedFavoritesState => {
+  if (!persistedState || typeof persistedState !== 'object') {
+    return { ids: [] };
+  }
+
+  const legacy = persistedState as { ids?: unknown };
+  const ids = Array.isArray(legacy.ids)
+    ? (legacy.ids as unknown[]).filter((id): id is string => typeof id === 'string')
+    : [];
+
+  if (version <= 0) {
+    return { ids };
+  }
+
+  return { ids };
+};
+
+export const selectFavoriteIds = (state: FavoritesStore) => state.ids;
+export const selectFavoriteCount = (state: FavoritesStore) => state.ids.length;
+export const selectIsFavorite = (id: string) => (state: FavoritesStore) =>
+  state.ids.includes(id);
 
 export const useFavoritesStore = create<FavoritesStore>()(
   persist(
@@ -32,14 +56,13 @@ export const useFavoritesStore = create<FavoritesStore>()(
           set({ ids: [...get().ids, id] });
         }
       },
-      
-      isFavorite: (id) => get().ids.includes(id),
-      
-      getCount: () => get().ids.length
     }),
     {
       name: 'nora-makovitz-favorites',
       storage: createJSONStorage(() => localStorage),
+      version: FAVORITES_STORE_VERSION,
+      partialize: (state) => ({ ids: state.ids }),
+      migrate: migrateFavoritesState,
     }
   )
 );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
-import { useFavoritesStore } from "@/store/favoritesStore";
+import { selectIsFavorite, useFavoritesStore } from "@/store/favoritesStore";
 import { useFavoritesHydrated } from "@/store/hydration";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useState } from "react";
@@ -20,7 +20,7 @@ interface ProductDetailClientProps {
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const addToCart = useCartStore((state) => state.addToCart);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
-  const isFav = useFavoritesStore((state) => state.ids.includes(product.id));
+  const isFav = useFavoritesStore(selectIsFavorite(product.id));
   const hydrated = useFavoritesHydrated();
   const [added, setAdded] = useState(false);
 

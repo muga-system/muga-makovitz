@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/store/cartStore";
+import { selectCartItems, selectCartTotal, useCartStore } from "@/store/cartStore";
 import { useCartHydrated } from "@/store/hydration";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,18 +8,16 @@ import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { formatArs } from "@/utils/format";
 
 export default function CartClient() {
-  const items = useCartStore((state) => state.items);
+  const items = useCartStore(selectCartItems);
   const updateQty = useCartStore((state) => state.updateQty);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
-  const getTotal = useCartStore((state) => state.getTotal);
+  const total = useCartStore(selectCartTotal);
   const mounted = useCartHydrated();
-
-  const total = getTotal();
 
   if (!mounted) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "var(--color-text-muted)" }}>
+      <div className="state-loading">
         Cargando...
       </div>
     );
@@ -27,8 +25,8 @@ export default function CartClient() {
 
   if (items.length === 0) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", border: "1px dashed var(--color-border)", borderRadius: "var(--radius-sm)", color: "var(--color-text-muted)" }}>
-        <ShoppingCart size={48} style={{ margin: "0 auto 1rem", opacity: 0.5 }} />
+      <div className="state-empty">
+        <ShoppingCart size={48} className="state-empty-icon" />
         <p>Tu carrito está vacío.</p>
         <Link href="/tienda" className="btn btn-primary" style={{ marginTop: "1rem" }}>
           Ver productos
@@ -38,25 +36,24 @@ export default function CartClient() {
   }
 
   return (
-    <div style={{ display: "grid", gap: "2rem" }}>
-      <div style={{ display: "grid", gap: "1.25rem" }}>
+    <div className="cart-layout">
+      <div className="cart-items">
         {items.map((item) => (
-          <div key={item.id} style={{ display: "grid", gridTemplateColumns: "110px 1fr", gap: "1rem", padding: "1rem", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", background: "color-mix(in srgb, var(--color-surface) 50%, transparent)", boxShadow: "0 8px 20px rgba(56, 49, 40, 0.06)" }}>
+          <div key={item.id} className="cart-item">
             <Image
               src={item.image}
               alt={item.name}
               width={220}
               height={220}
-              style={{ width: "100%", borderRadius: "var(--radius-sm)", objectFit: "cover", aspectRatio: "1/1" }}
+              className="cart-thumb"
             />
             
-            <div style={{ display: "grid", gap: "0.5rem", alignContent: "start" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-                <Link href={`/producto/${item.slug}`} style={{ fontWeight: 600 }}>{item.name}</Link>
+            <div className="cart-body">
+              <div className="cart-item-head">
+                <Link href={`/producto/${item.slug}`} className="cart-item-name">{item.name}</Link>
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="btn"
-                  style={{ padding: "0.25rem", minHeight: "auto", background: "transparent", border: "none" }}
+                  className="btn cart-remove-btn"
                   aria-label="Eliminar del carrito"
                 >
                   <Trash2 size={18} />
@@ -65,7 +62,7 @@ export default function CartClient() {
               
               <p className="card-price">{formatArs(item.price)}</p>
               
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+              <div className="cart-qty-row">
                 <button
                   onClick={() => updateQty(item.id, item.qty - 1)}
                   className="btn btn-secondary"
@@ -82,7 +79,7 @@ export default function CartClient() {
                 >
                   <Plus size={16} />
                 </button>
-                <span style={{ color: "var(--color-text-muted)", fontSize: "0.85rem", marginLeft: "0.5rem" }}>
+                <span className="cart-stock-label">
                   Stock: {item.stock}
                 </span>
               </div>
@@ -91,17 +88,17 @@ export default function CartClient() {
         ))}
       </div>
 
-      <div style={{ marginTop: "2rem", display: "grid", gap: "0.75rem", maxWidth: "400px", marginLeft: "auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "1.08rem", fontWeight: 600 }}>
+      <div className="cart-summary">
+        <div className="cart-total-row">
           <span>Total</span>
           <span>{formatArs(total)}</span>
         </div>
         
-        <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", marginTop: "-0.5rem" }}>
+        <p className="cart-summary-note">
           Envío a coordinar por WhatsApp
         </p>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "0.5rem" }}>
+        <div className="cart-summary-actions">
           <Link href="/checkout" className="btn btn-primary" style={{ flex: 1 }}>
             Continuar compra
           </Link>

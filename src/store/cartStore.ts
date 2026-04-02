@@ -17,9 +17,32 @@ interface CartStore {
   removeFromCart: (id: string) => void;
   updateQty: (id: string, qty: number) => void;
   clearCart: () => void;
-  getTotal: () => number;
-  getCount: () => number;
 }
+
+type PersistedCartState = Pick<CartStore, 'items'>;
+
+const CART_STORE_VERSION = 1;
+
+const migrateCartState = (persistedState: unknown, version: number): PersistedCartState => {
+  if (!persistedState || typeof persistedState !== 'object') {
+    return { items: [] };
+  }
+
+  const legacy = persistedState as { items?: unknown };
+  const items = Array.isArray(legacy.items) ? (legacy.items as CartItem[]) : [];
+
+  if (version <= 0) {
+    return { items };
+  }
+
+  return { items };
+};
+
+export const selectCartItems = (state: CartStore) => state.items;
+export const selectCartCount = (state: CartStore) =>
+  state.items.reduce((acc, item) => acc + item.qty, 0);
+export const selectCartTotal = (state: CartStore) =>
+  state.items.reduce((acc, item) => acc + item.qty * item.price, 0);
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -60,18 +83,13 @@ export const useCartStore = create<CartStore>()(
       },
       
       clearCart: () => set({ items: [] }),
-      
-      getTotal: () => {
-        return get().items.reduce((acc, item) => acc + item.qty * item.price, 0);
-      },
-      
-      getCount: () => {
-        return get().items.reduce((acc, item) => acc + item.qty, 0);
-      }
     }),
     {
       name: 'nora-makovitz-cart',
       storage: createJSONStorage(() => localStorage),
+      version: CART_STORE_VERSION,
+      partialize: (state) => ({ items: state.items }),
+      migrate: migrateCartState,
     }
   )
 );

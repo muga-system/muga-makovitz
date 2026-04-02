@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCartStore } from "@/store/cartStore";
-import { useFavoritesStore } from "@/store/favoritesStore";
+import { selectIsFavorite, useFavoritesStore } from "@/store/favoritesStore";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useState } from "react";
 import { formatArs } from "@/utils/format";
@@ -25,7 +25,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const addToCart = useCartStore((state) => state.addToCart);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
-  const isFav = useFavoritesStore((state) => state.ids.includes(product.id));
+  const isFav = useFavoritesStore(selectIsFavorite(product.id));
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
