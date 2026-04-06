@@ -27,6 +27,8 @@ export default function CarritoPage() {
         brand={siteConfig.brand}
         instagram={siteConfig.instagram}
         instagramHandle={siteConfig.instagramHandle}
+        facebook={siteConfig.facebook}
+        facebookHandle={siteConfig.facebookHandle}
         whatsappUrl={footerWhatsappUrl}
       />
     </>

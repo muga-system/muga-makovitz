@@ -588,8 +588,96 @@ a {
 
 .site-footer {
   margin-top: 4rem;
-  padding: 2.5rem 0;
-  border-top: 1px solid var(--color-border);
+  padding: 2.6rem 0 2rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 86%, transparent);
+  background: color-mix(in srgb, var(--color-bg-soft) 60%, transparent);
+}
+
+.site-footer-shell {
+  width: min(100% - 2.4rem, 980px);
+  margin-inline: auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.site-footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(150px, 1fr));
+  gap: 1rem 2rem;
+  align-items: start;
+}
+
+.site-footer-brand-block {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.site-footer-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.site-footer-title {
+  font-size: clamp(1.35rem, 2.6vw, 1.8rem);
+  line-height: 1.12;
+}
+
+.site-footer-claim {
+  color: var(--color-text-muted);
+  max-width: 40ch;
+}
+
+.site-footer-group-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.site-footer-links-block,
+.site-footer-social-block {
+  display: grid;
+  align-content: start;
+}
+
+.site-footer-nav,
+.site-footer-social {
+  display: grid;
+  gap: 0.52rem;
+}
+
+.site-footer-nav a,
+.site-footer-social a {
+  width: fit-content;
+  color: var(--color-text);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-transform: lowercase;
+}
+
+.site-footer-nav a:hover,
+.site-footer-nav a:focus-visible,
+.site-footer-social a:hover,
+.site-footer-social a:focus-visible {
+  color: var(--color-primary-strong);
+  border-bottom-color: var(--color-primary-strong);
+}
+
+.site-footer-version {
+  padding-top: 0.9rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 82%, transparent);
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 860px) {
+  .site-footer-top {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
 }
 
 .state-loading {

@@ -27,6 +27,8 @@ export default function FavoritosPage() {
         brand={siteConfig.brand}
         instagram={siteConfig.instagram}
         instagramHandle={siteConfig.instagramHandle}
+        facebook={siteConfig.facebook}
+        facebookHandle={siteConfig.facebookHandle}
         whatsappUrl={footerWhatsappUrl}
       />
     </>

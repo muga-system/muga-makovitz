@@ -24,10 +24,12 @@ export const siteConfig = {
     logo: "/logo.png",
     heroImage: "/bolso-simple/original.webp"
   },
-  instagram: "https://instagram.com/nora.makovitz",
-  instagramHandle: "@nora.makovitz",
+  instagram: "https://www.instagram.com/babushka.arg/",
+  instagramHandle: "@babushka.arg",
+  facebook: "https://www.facebook.com/nora.makovitz?locale=es_LA",
+  facebookHandle: "Facebook Nora Makovitz",
   whatsappNumber: "5491150076209",
-  canonical: "https://nora-makovitz.vercel.app",
+  canonical: "https://muga-makovitz.vercel.app",
   seo: {
     title: "Nora Makovitz | Bolsos y carteras de tela hechos a mano",
     description:

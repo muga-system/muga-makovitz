@@ -110,20 +110,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" aria-labelledby="reinforcement-title">
-          <div className="container">
-            <div style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", background: "var(--color-surface)", padding: "2rem", boxShadow: "var(--shadow-sm)" }}>
-              <h2 id="reinforcement-title" className="section-title">Hecho para durar</h2>
-              <p className="section-subtitle">Hecho a mano - Producción limitada - Sin intermediarios.</p>
-            </div>
-          </div>
-        </section>
       </main>
 
       <SiteFooter
         brand={siteConfig.brand}
         instagram={siteConfig.instagram}
         instagramHandle={siteConfig.instagramHandle}
+        facebook={siteConfig.facebook}
+        facebookHandle={siteConfig.facebookHandle}
         whatsappUrl={footerWhatsappUrl}
       />
     </>

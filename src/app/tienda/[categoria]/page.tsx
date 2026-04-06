@@ -81,6 +81,8 @@ export default async function CategoriaPage({ params }: Props) {
         brand={siteConfig.brand}
         instagram={siteConfig.instagram}
         instagramHandle={siteConfig.instagramHandle}
+        facebook={siteConfig.facebook}
+        facebookHandle={siteConfig.facebookHandle}
         whatsappUrl={footerWhatsappUrl}
       />
     </>

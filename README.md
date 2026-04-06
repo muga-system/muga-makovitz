@@ -27,10 +27,10 @@ Storefront en Next.js (App Router) para catalogo, favoritos, carrito y checkout 
 ## Scripts
 
 ```bash
-npm run dev
-npm run lint
-npm run build
-npm run start
+pnpm dev
+pnpm lint
+pnpm build
+pnpm start
 ```
 
 ## Estructura
