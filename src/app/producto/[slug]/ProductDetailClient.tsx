@@ -5,6 +5,8 @@ import { selectIsFavorite, useFavoritesStore } from "@/store/favoritesStore";
 import { useFavoritesHydrated } from "@/store/hydration";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { formatArs } from "@/utils/format";
 
 interface ProductDetailClientProps {
   product: {
@@ -34,11 +36,20 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       image: product.images[0],
     });
     setAdded(true);
+    toast.success("Agregado al carrito", {
+      description: `${product.name} • ${formatArs(product.price)}`,
+    });
     setTimeout(() => setAdded(false), 2000);
   };
 
   const handleToggleFav = () => {
+    const wasFavorite = isFav;
     toggleFavorite(product.id);
+    if (wasFavorite) {
+      toast("Quitado de favoritos", { description: product.name });
+    } else {
+      toast.success("Guardado en favoritos", { description: product.name });
+    }
   };
 
   if (!hydrated) {

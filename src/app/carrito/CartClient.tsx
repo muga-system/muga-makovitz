@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { formatArs } from "@/utils/format";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function CartClient() {
   const items = useCartStore(selectCartItems);
@@ -14,6 +16,7 @@ export default function CartClient() {
   const clearCart = useCartStore((state) => state.clearCart);
   const total = useCartStore(selectCartTotal);
   const mounted = useCartHydrated();
+  const [confirmingClear, setConfirmingClear] = useState(false);
 
   if (!mounted) {
     return (
@@ -102,16 +105,33 @@ export default function CartClient() {
           <Link href="/checkout" className="btn btn-primary" style={{ flex: 1 }}>
             Continuar compra
           </Link>
-          <button
-            onClick={() => {
-              if (confirm("¿Vaciar el carrito?")) {
-                clearCart();
-              }
-            }}
-            className="btn btn-secondary"
-          >
-            Vaciar
-          </button>
+          {confirmingClear ? (
+            <>
+              <button
+                onClick={() => {
+                  clearCart();
+                  setConfirmingClear(false);
+                  toast("Carrito vaciado");
+                }}
+                className="btn btn-primary"
+              >
+                Confirmar vaciado
+              </button>
+              <button
+                onClick={() => setConfirmingClear(false)}
+                className="btn btn-secondary"
+              >
+                Cancelar
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => setConfirmingClear(true)}
+              className="btn btn-secondary"
+            >
+              Vaciar
+            </button>
+          )}
         </div>
       </div>
     </div>

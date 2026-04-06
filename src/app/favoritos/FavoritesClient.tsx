@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { formatArs } from "@/utils/format";
+import { toast } from "sonner";
 
 export default function FavoritesClient() {
   const favoriteIds = useFavoritesStore((state) => state.ids);
@@ -51,7 +52,10 @@ export default function FavoritesClient() {
               />
             </Link>
             <button
-              onClick={() => removeFavorite(product.id)}
+              onClick={() => {
+                removeFavorite(product.id);
+                toast("Quitado de favoritos", { description: product.name });
+              }}
               className="btn shop-fav-btn"
               aria-label="Quitar de favoritos"
             >
@@ -76,6 +80,9 @@ export default function FavoritesClient() {
                   price: product.price,
                   stock: product.stock,
                   image: product.images[0],
+                });
+                toast.success("Agregado al carrito", {
+                  description: `${product.name} • ${formatArs(product.price)}`,
                 });
               }}
               className="btn btn-primary"
