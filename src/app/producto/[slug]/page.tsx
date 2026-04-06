@@ -5,6 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import { formatArs } from "@/utils/format";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import ProductDetailClient from "./ProductDetailClient";
 import ProductImageGalleryClient from "./ProductImageGalleryClient";
 
@@ -27,6 +28,7 @@ export default async function ProductoPage({ params }: Props) {
   }
 
   const detailImages = product?.images?.length ? product.images : [siteConfig.assets.heroImage];
+  const categoryLabel = `${product.category.charAt(0).toUpperCase()}${product.category.slice(1)}`;
 
   const footerWhatsappUrl = buildWhatsAppUrl(
     siteConfig.whatsappNumber,
@@ -43,41 +45,51 @@ export default async function ProductoPage({ params }: Props) {
     <>
       <Navbar />
       
-      <main id="contenido" className="section">
-        <div className="container" style={{ display: "grid", gap: "2.5rem", gridTemplateColumns: "1fr", alignItems: "start" }}>
-          <figure style={{ margin: 0 }}>
+      <main id="contenido" className="section detail-page-section">
+        <div className="container detail-layout">
+          <nav className="detail-breadcrumb" aria-label="Breadcrumb">
+            <ol className="detail-breadcrumb-list detail-breadcrumb-list-mobile">
+              <li><Link href="/tienda">Tienda</Link></li>
+              <li className="detail-breadcrumb-current" aria-current="page">{product.name}</li>
+            </ol>
+
+            <ol className="detail-breadcrumb-list detail-breadcrumb-list-desktop">
+              <li><Link href="/">Inicio</Link></li>
+              <li><Link href="/tienda">Tienda</Link></li>
+              <li><Link href={`/tienda/${product.category}`}>{categoryLabel}</Link></li>
+              <li className="detail-breadcrumb-current" aria-current="page">{product.name}</li>
+            </ol>
+          </nav>
+
+          <figure className="detail-figure">
             <ProductImageGalleryClient images={detailImages} productName={product.name} />
           </figure>
 
-          <div style={{ display: "grid", gap: "1rem" }}>
-            <p style={{ letterSpacing: "0.08em", textTransform: "uppercase", fontSize: "0.78rem", color: "var(--color-text-muted)" }}>
+          <div className="detail-content">
+            <p className="detail-category">
               {product.category}
             </p>
-            <h1 style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", lineHeight: 1.1 }}>{product.name}</h1>
-            <p className="detail-price" style={{ fontSize: "1.1rem", fontWeight: 700 }}>{formatArs(product.price)}</p>
-            <p style={{ color: "var(--color-text-muted)", maxWidth: "52ch" }}>{product.description}</p>
+            <h1 className="detail-title">{product.name}</h1>
+            <p className="detail-price">{formatArs(product.price)}</p>
+            <p className="detail-description">{product.description}</p>
 
-            <div style={{ display: "grid", gap: "0.5rem", padding: "1rem", border: "1px solid var(--color-border)", borderRadius: "var(--radius-sm)" }}>
-              <p style={{ fontWeight: 600 }}>¿Para quién es?</p>
-              <p style={{ color: "var(--color-text-muted)" }}>{product.use}</p>
+            <div className="detail-usage-box">
+              <p className="detail-usage-title">¿Para quién es?</p>
+              <p className="detail-usage-copy">{product.use}</p>
             </div>
 
-            <div style={{ display: "grid", gap: "0.5rem" }}>
-              <h2 style={{ fontSize: "1.25rem", lineHeight: 1.2 }}>Características</h2>
-              <ul style={{ display: "grid", gap: "0.5rem", paddingLeft: "1.1rem", color: "var(--color-text-muted)" }}>
+            <div className="detail-features">
+              <h2 className="detail-features-title">Características</h2>
+              <ul className="detail-features-list">
                 {product.features.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
             </div>
 
-            <p style={{ color: "var(--color-text)", fontWeight: 500, maxWidth: "52ch" }}>{product.close}</p>
+            <p className="detail-close-copy">{product.close}</p>
 
-            <p style={{ 
-              fontSize: product.stock > 0 ? "0.9rem" : "0.9rem", 
-              color: product.stock > 0 ? "var(--color-primary-strong)" : "#9d5a5a",
-              fontWeight: 500
-            }}>
+            <p className={`detail-stock ${product.stock > 0 ? "detail-stock-ok" : "detail-stock-out"}`}>
               {getStockLabel(product.stock)}
             </p>
 

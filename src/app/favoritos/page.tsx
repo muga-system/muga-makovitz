@@ -16,8 +16,8 @@ export default function FavoritosPage() {
       
       <main id="contenido" className="section">
         <div className="container">
-          <h1 className="section-title" style={{ marginBottom: "0.5rem" }}>Favoritos</h1>
-          <p className="section-subtitle" style={{ marginBottom: "2rem" }}>Productos guardados para después</p>
+          <h1 className="section-title page-title-tight">Favoritos</h1>
+          <p className="section-subtitle page-subtitle-spaced">Productos guardados para después</p>
           
           <FavoritesClient />
         </div>

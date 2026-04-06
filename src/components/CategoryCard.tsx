@@ -23,7 +23,7 @@ export default function CategoryCard({ item, ctaUrl }: CategoryCardProps) {
       </div>
       <h3 className="card-title">{item.name}</h3>
       <p className="card-meta">{item.meta}</p>
-      <Link href={ctaUrl} className="btn btn-secondary" style={{ width: "100%" }}>
+      <Link href={ctaUrl} className="btn btn-secondary card-cta">
         {isComingSoon ? "Pronto" : item.cta}
       </Link>
     </article>

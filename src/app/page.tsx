@@ -13,6 +13,8 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 );
 
 export default function Home() {
+  const hasUpcomingCategories = categoryItems.some((item) => item.slug !== "bolsos");
+
   return (
     <>
       <Navbar />
@@ -30,18 +32,18 @@ export default function Home() {
       <main id="contenido">
         <section className="section" aria-labelledby="categories-title">
           <div className="container">
-            <div style={{ marginBottom: "2rem" }}>
-              <p style={{ width: "fit-content", marginBottom: "0.75rem", padding: "0.22rem 0.56rem", border: "1px solid var(--color-border)", borderRadius: "999px", color: "var(--color-text-muted)", fontSize: "0.74rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>Colección</p>
+            <div className="section-head">
+              <p className="section-kicker">Colección</p>
               <h2 id="categories-title" className="section-title">Colección</h2>
               <p className="section-subtitle">Bolsos, carteras y organizadores para uso diario.</p>
-              <ul style={{ display: "flex", flexWrap: "wrap", gap: "1rem", padding: 0, listStyle: "none", marginTop: "1rem" }}>
-                <li style={{ color: "var(--color-text-muted)", fontSize: "0.84rem" }}>Hecho a mano</li>
-                <li style={{ color: "var(--color-text-muted)", fontSize: "0.84rem" }}>Uso real</li>
-                <li style={{ color: "var(--color-text-muted)", fontSize: "0.84rem" }}>Producción limitada</li>
+              <ul className="section-points">
+                <li>Hecho a mano</li>
+                <li>Uso real</li>
+                <li>Producción limitada</li>
               </ul>
             </div>
 
-            <div style={{ display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))" }}>
+            <div className="categories-grid">
               {categoryItems.map((item) => (
                 <CategoryCard
                   key={item.slug}
@@ -50,16 +52,17 @@ export default function Home() {
                 />
               ))}
             </div>
+            {hasUpcomingCategories ? <p className="upcoming-categories-hint">Más categorías próximamente</p> : null}
           </div>
         </section>
 
         <section className="section" aria-labelledby="featured-title">
           <div className="container">
-            <p style={{ width: "fit-content", marginBottom: "0.75rem", padding: "0.22rem 0.56rem", border: "1px solid var(--color-border)", borderRadius: "999px", color: "var(--color-text-muted)", fontSize: "0.74rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>Selección</p>
+            <p className="section-kicker">Selección</p>
             <h2 id="featured-title" className="section-title">Modelos seleccionados</h2>
             <p className="section-subtitle">Nombre claro, uso real y compra simple.</p>
 
-            <div style={{ display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+            <div className="featured-grid">
               {featuredProducts.slice(0, 3).map((item) => (
                 <FeaturedProductCard
                   key={item.slug}
@@ -69,7 +72,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div style={{ marginTop: "2rem", textAlign: "center" }}>
+            <div className="section-cta-center">
               <Link href="/tienda" className="btn btn-primary">
                 Ver más
               </Link>
@@ -79,7 +82,7 @@ export default function Home() {
 
         <section className="section" aria-labelledby="weekly-title">
           <div className="container">
-            <p style={{ width: "fit-content", marginBottom: "0.75rem", padding: "0.22rem 0.56rem", border: "1px solid var(--color-border)", borderRadius: "999px", color: "var(--color-text-muted)", fontSize: "0.74rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>Confianza</p>
+            <p className="section-kicker">Confianza</p>
             <h2 id="weekly-title" className="section-title">Confianza</h2>
             <p className="section-subtitle">Información clara para comprar sin dudas.</p>
 
@@ -90,14 +93,14 @@ export default function Home() {
                     <p className="trust-index" aria-hidden="true">
                       {String(index + 1).padStart(2, '0')}
                     </p>
-                    <span className="trust-tooltip" role="tooltip">{item.note}</span>
                   </div>
                   <h3 className="trust-title">{item.title}</h3>
+                  <span className="trust-tooltip" role="tooltip">{item.note}</span>
                 </li>
               ))}
             </ol>
 
-            <div style={{ marginTop: "1.5rem" }}>
+            <div className="trust-cta-wrap">
               <a
                 className="btn btn-secondary"
                 href={buildWhatsAppUrl(siteConfig.whatsappNumber, "Hola! Quiero consultar sobre los tiempos y disponibilidad.")}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
@@ -25,6 +25,9 @@ export default function ProductImageGalleryClient({
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const mediaRef = useRef<HTMLDivElement>(null);
+
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -48,11 +51,21 @@ export default function ProductImageGalleryClient({
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
 
+    const raf = window.requestAnimationFrame(() => {
+      const media = mediaRef.current;
+      if (!media) {
+        return;
+      }
+      media.scrollLeft = Math.max(0, (media.scrollWidth - media.clientWidth) / 2);
+      media.scrollTop = Math.max(0, (media.scrollHeight - media.clientHeight) / 2);
+    });
+
     return () => {
       document.body.style.overflow = originalOverflow;
       document.body.style.paddingRight = originalPaddingRight;
       document.body.removeAttribute("data-image-modal-open");
       window.removeEventListener("keydown", onKeyDown);
+      window.cancelAnimationFrame(raf);
     };
   }, [isModalOpen]);
 
@@ -83,6 +96,7 @@ export default function ProductImageGalleryClient({
             className="detail-main-image"
           />
         </button>
+        <p className="detail-zoom-hint">Tocá la imagen para ampliar</p>
 
         {hasMultipleImages ? (
           <div className="detail-thumbs-grid">
@@ -116,28 +130,30 @@ export default function ProductImageGalleryClient({
           role="dialog"
           aria-modal="true"
           aria-label={`Imagen ampliada de ${productName}`}
-          onClick={() => setIsModalOpen(false)}
+          onClick={closeModal}
         >
           <div className="image-modal-panel" onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
               className="btn btn-secondary image-modal-close"
-              onClick={() => setIsModalOpen(false)}
+              onClick={closeModal}
               aria-label="Cerrar imagen ampliada"
             >
               <X size={18} />
             </button>
 
-            <Image
-              src={activeImage}
-              alt={`${productName} ampliada`}
-              width={1600}
-              height={1600}
-              quality={100}
-              sizes="92vw"
-              className="image-modal-image"
-              priority
-            />
+            <div ref={mediaRef} className="image-modal-media is-mobile-zoomed">
+              <Image
+                src={activeImage}
+                alt={`${productName} ampliada`}
+                width={2400}
+                height={2400}
+                quality={100}
+                sizes="200vw"
+                className="image-modal-image"
+                priority
+              />
+            </div>
           </div>
         </div>,
         document.body

@@ -54,9 +54,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   if (!hydrated) {
     return (
-      <div style={{ display: "grid", gap: "0.75rem", width: "min(100%, 360px)" }}>
-        <button className="btn btn-primary" style={{ width: "100%" }} disabled>
-          <ShoppingCart size={16} style={{ marginRight: "0.5rem" }} />
+      <div className="detail-actions">
+        <button className="btn btn-primary detail-action-btn" disabled>
+          <ShoppingCart size={16} className="btn-icon" />
           Agregar al carrito
         </button>
       </div>
@@ -64,21 +64,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   }
 
   return (
-    <div style={{ display: "grid", gap: "0.75rem", width: "min(100%, 360px)" }}>
+    <div className="detail-actions">
       {product.stock > 0 ? (
         <button
           onClick={handleAddToCart}
-          className={`btn ${added ? "btn-secondary" : "btn-primary"}`}
-          style={{ width: "100%" }}
+          className={`btn ${added ? "btn-secondary" : "btn-primary"} detail-action-btn`}
           disabled={added}
         >
-          <ShoppingCart size={16} style={{ marginRight: "0.5rem" }} />
+          <ShoppingCart size={16} className="btn-icon" />
           {added ? "Agregado al carrito" : "Agregar al carrito"}
         </button>
       ) : (
         <button
-          className="btn btn-secondary"
-          style={{ width: "100%", opacity: 0.6, cursor: "not-allowed" }}
+          className="btn btn-secondary detail-action-btn is-disabled"
           disabled
         >
           Sin stock
@@ -86,10 +84,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       )}
       <button
         onClick={handleToggleFav}
-        className="btn btn-outline"
-        style={{ width: "100%" }}
+        className="btn btn-outline detail-action-btn"
       >
-        <Heart size={16} fill={isFav ? "currentColor" : "none"} style={{ marginRight: "0.5rem" }} />
+        <Heart size={16} fill={isFav ? "currentColor" : "none"} className="btn-icon" />
         {isFav ? "Guardado en favoritos" : "Guardar en favoritos"}
       </button>
     </div>

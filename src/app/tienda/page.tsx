@@ -20,7 +20,7 @@ export default function TiendaPage() {
       <main id="contenido">
         <section className="section" aria-labelledby="shop-title">
           <div className="container">
-            <div className="shop-header" style={{ paddingBottom: "1.5rem" }}>
+            <div className="shop-header">
               <h1 id="shop-title" className="section-title">Tienda</h1>
               <p className="section-subtitle">Todos los modelos disponibles</p>
             </div>

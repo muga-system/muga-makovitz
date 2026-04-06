@@ -8,7 +8,7 @@ interface HeroProps {
   brand: string;
   heading: string;
   subtext: string;
-  reinforcement: string;
+  reinforcement?: string;
   heroImageSrc: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
@@ -27,9 +27,10 @@ export default function Hero({
     <section className="hero">
       <div className="container hero-grid">
         <div className="hero-content">
+          <p className="hero-badge">Bolsos</p>
           <h1>{heading}</h1>
           <p className="hero-copy">{subtext}</p>
-          <p className="hero-reinforcement">{reinforcement}</p>
+          {reinforcement ? <p className="hero-reinforcement">{reinforcement}</p> : null}
           <div className="hero-actions">
             <Link href={primaryCta.href} className="btn btn-primary">
               {primaryCta.label}

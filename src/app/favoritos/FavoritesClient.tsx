@@ -21,7 +21,7 @@ export default function FavoritesClient() {
 
   if (!mounted) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "var(--color-text-muted)" }}>
+      <div className="state-loading">
         Cargando...
       </div>
     );
@@ -29,9 +29,9 @@ export default function FavoritesClient() {
 
   if (favoriteProducts.length === 0) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", border: "1px dashed var(--color-border)", borderRadius: "var(--radius-sm)", color: "var(--color-text-muted)" }}>
+      <div className="state-empty">
         <p>No tienes productos guardados en favoritos.</p>
-        <Link href="/tienda" className="btn btn-primary" style={{ marginTop: "1rem" }}>
+        <Link href="/tienda" className="btn btn-primary state-empty-cta">
           Ver productos
         </Link>
       </div>
@@ -39,7 +39,7 @@ export default function FavoritesClient() {
   }
 
   return (
-    <div style={{ display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+    <div className="favorite-grid">
       {favoriteProducts.map((product) => (
         <article key={product.id} className="product-card shop-card favorite-card">
           <div className="shop-media">
@@ -88,14 +88,13 @@ export default function FavoritesClient() {
                   description: `${product.name} • ${formatArs(product.price)}`,
                 });
               }}
-              className="btn btn-primary"
-              style={{ width: "100%" }}
+              className="btn btn-primary card-cta"
               disabled={product.stock <= 0}
             >
-              <ShoppingCart size={16} style={{ marginRight: "0.5rem" }} />
+              <ShoppingCart size={16} className="btn-icon" />
               {product.stock > 0 ? "Agregar al carrito" : "Sin stock"}
             </button>
-            <Link href={`/producto/${product.slug}`} className="btn btn-outline" style={{ width: "100%" }}>
+            <Link href={`/producto/${product.slug}`} className="btn btn-outline card-cta">
               Ver detalles
             </Link>
           </div>

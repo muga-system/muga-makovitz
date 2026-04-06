@@ -16,8 +16,8 @@ export default function CheckoutPage() {
       
       <main id="contenido" className="section">
         <div className="container">
-          <h1 className="section-title" style={{ marginBottom: "0.5rem" }}>Finalizar compra</h1>
-          <p className="section-subtitle" style={{ marginBottom: "2rem" }}>Completá tus datos para confirmar el pedido</p>
+          <h1 className="section-title page-title-tight">Finalizar compra</h1>
+          <p className="section-subtitle page-subtitle-spaced">Completá tus datos para confirmar el pedido</p>
           
           <CheckoutClient />
         </div>

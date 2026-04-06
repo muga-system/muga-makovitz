@@ -98,23 +98,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         {product.stock > 0 ? (
           <button
             onClick={handleAddToCart}
-            className={`btn ${added ? "btn-secondary" : "btn-primary"}`}
-            style={{ width: "100%" }}
+            className={`btn ${added ? "btn-secondary" : "btn-primary"} card-cta`}
             disabled={added}
           >
-            <ShoppingCart size={16} style={{ marginRight: "0.5rem" }} />
+            <ShoppingCart size={16} className="btn-icon" />
             {added ? "Agregado" : "Agregar al carrito"}
           </button>
         ) : (
           <button
-            className="btn btn-secondary"
-            style={{ width: "100%", opacity: 0.6, cursor: "not-allowed" }}
+            className="btn btn-secondary card-cta is-disabled"
             disabled
           >
             Sin stock
           </button>
         )}
-        <Link href={`/producto/${product.slug}`} className="btn btn-outline" style={{ width: "100%" }}>
+        <Link href={`/producto/${product.slug}`} className="btn btn-outline card-cta">
           Ver detalles
         </Link>
       </div>

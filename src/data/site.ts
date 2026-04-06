@@ -39,7 +39,7 @@ export const siteConfig = {
   hero: {
     heading: "Nora Makovitz",
     subtext: "Bolso Ligero: diseñado para acompañarte todos los días",
-    reinforcement: "Tela resistente, estampa única, hecho a mano",
+    reinforcement: "",
     primaryCta: "Comprar ahora",
     secondaryCta: "Ver detalles"
   },

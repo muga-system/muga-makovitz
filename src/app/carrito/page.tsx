@@ -16,8 +16,8 @@ export default function CarritoPage() {
       
       <main id="contenido" className="section">
         <div className="container">
-          <h1 className="section-title" style={{ marginBottom: "0.5rem" }}>Carrito</h1>
-          <p className="section-subtitle" style={{ marginBottom: "2rem" }}>Resumen de tu compra</p>
+          <h1 className="section-title page-title-tight">Carrito</h1>
+          <p className="section-subtitle page-subtitle-spaced">Resumen de tu compra</p>
           
           <CartClient />
         </div>

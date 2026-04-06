@@ -32,7 +32,7 @@ export default function CartClient() {
       <div className="state-empty">
         <ShoppingCart size={48} className="state-empty-icon" />
         <p>Tu carrito está vacío.</p>
-        <Link href="/tienda" className="btn btn-primary" style={{ marginTop: "1rem" }}>
+        <Link href="/tienda" className="btn btn-primary state-empty-cta">
           Ver productos
         </Link>
       </div>
@@ -71,16 +71,14 @@ export default function CartClient() {
               <div className="cart-qty-row">
                 <button
                   onClick={() => updateQty(item.id, item.qty - 1)}
-                  className="btn btn-secondary"
-                  style={{ minWidth: "34px", minHeight: "34px", padding: 0 }}
+                  className="btn btn-secondary qty-btn"
                 >
                   <Minus size={16} />
                 </button>
-                <span style={{ minWidth: "2rem", textAlign: "center" }}>{item.qty}</span>
+                <span className="cart-qty-value">{item.qty}</span>
                 <button
                   onClick={() => updateQty(item.id, item.qty + 1)}
-                  className="btn btn-secondary"
-                  style={{ minWidth: "34px", minHeight: "34px", padding: 0 }}
+                  className="btn btn-secondary qty-btn"
                   disabled={item.qty >= item.stock}
                 >
                   <Plus size={16} />
@@ -105,7 +103,7 @@ export default function CartClient() {
         </p>
 
         <div className="cart-summary-actions">
-          <Link href="/checkout" className="btn btn-primary" style={{ flex: 1 }}>
+          <Link href="/checkout" className="btn btn-primary cart-checkout-btn">
             Continuar compra
           </Link>
           {confirmingClear ? (
