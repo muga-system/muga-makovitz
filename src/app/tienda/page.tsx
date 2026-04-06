@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import SiteFooter from "@/components/SiteFooter";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import ProductCard from "@/components/ProductCard";
+import Link from "next/link";
 
 const footerWhatsappUrl = buildWhatsAppUrl(
   siteConfig.whatsappNumber,
@@ -18,8 +19,15 @@ export default function TiendaPage() {
       <Navbar />
       
       <main id="contenido">
-        <section className="section" aria-labelledby="shop-title">
+        <section className="section section-compact-top" aria-labelledby="shop-title">
           <div className="container">
+            <nav className="page-breadcrumb" aria-label="Breadcrumb">
+              <ol className="detail-breadcrumb-list">
+                <li><Link href="/">Inicio</Link></li>
+                <li className="detail-breadcrumb-current" aria-current="page">Tienda</li>
+              </ol>
+            </nav>
+
             <div className="shop-header">
               <h1 id="shop-title" className="section-title">Tienda</h1>
               <p className="section-subtitle">Todos los modelos disponibles</p>

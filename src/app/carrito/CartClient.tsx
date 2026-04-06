@@ -68,23 +68,29 @@ export default function CartClient() {
               
               <p className="card-price">{formatArs(item.price)}</p>
               
-              <div className="cart-qty-row">
-                <button
-                  onClick={() => updateQty(item.id, item.qty - 1)}
-                  className="btn btn-secondary qty-btn"
-                >
-                  <Minus size={16} />
-                </button>
-                <span className="cart-qty-value">{item.qty}</span>
-                <button
-                  onClick={() => updateQty(item.id, item.qty + 1)}
-                  className="btn btn-secondary qty-btn"
-                  disabled={item.qty >= item.stock}
-                >
-                  <Plus size={16} />
-                </button>
+              <div className="cart-meta-row">
+                <div className="cart-qty-group">
+                  <span className="cart-qty-label">Cantidad</span>
+                  <div className="cart-qty-row">
+                    <button
+                      onClick={() => updateQty(item.id, item.qty - 1)}
+                      className="btn btn-secondary qty-btn"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="cart-qty-value">{item.qty}</span>
+                    <button
+                      onClick={() => updateQty(item.id, item.qty + 1)}
+                      className="btn btn-secondary qty-btn"
+                      disabled={item.qty >= item.stock}
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+                </div>
+
                 <span className="cart-stock-label">
-                  Stock: {item.stock}
+                  Stock disponible: {item.stock}
                 </span>
               </div>
             </div>
@@ -94,8 +100,8 @@ export default function CartClient() {
 
       <div className="cart-summary">
         <div className="cart-total-row">
-          <span>Total</span>
-          <span>{formatArs(total)}</span>
+          <span className="cart-total-label">Total</span>
+          <span className="cart-total-value">{formatArs(total)}</span>
         </div>
         
         <p className="cart-summary-note">
@@ -114,13 +120,13 @@ export default function CartClient() {
                   setConfirmingClear(false);
                   toast("Carrito vaciado");
                 }}
-                className="btn btn-primary"
+                className="btn btn-primary cart-action-btn"
               >
                 Confirmar vaciado
               </button>
               <button
                 onClick={() => setConfirmingClear(false)}
-                className="btn btn-secondary"
+                className="btn btn-secondary cart-action-btn"
               >
                 Cancelar
               </button>
@@ -128,7 +134,7 @@ export default function CartClient() {
           ) : (
             <button
               onClick={() => setConfirmingClear(true)}
-              className="btn btn-secondary"
+              className="btn btn-secondary cart-action-btn"
             >
               Vaciar
             </button>

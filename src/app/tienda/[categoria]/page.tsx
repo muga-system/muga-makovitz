@@ -29,8 +29,16 @@ export default async function CategoriaPage({ params }: Props) {
       <Navbar />
       
       <main id="contenido">
-        <section className="section" aria-labelledby="shop-title">
+        <section className="section section-compact-top" aria-labelledby="shop-title">
           <div className="container">
+            <nav className="page-breadcrumb" aria-label="Breadcrumb">
+              <ol className="detail-breadcrumb-list">
+                <li><Link href="/">Inicio</Link></li>
+                <li><Link href="/tienda">Tienda</Link></li>
+                <li className="detail-breadcrumb-current" aria-current="page">{categoryLabel}</li>
+              </ol>
+            </nav>
+
             <div className="shop-header">
               <h1 id="shop-title" className="section-title">{categoryLabel}</h1>
               <p className="section-subtitle">{activeProducts.length} modelo{activeProducts.length !== 1 ? "s" : ""} disponible{activeProducts.length !== 1 ? "s" : ""}</p>

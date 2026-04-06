@@ -45,15 +45,10 @@ export default async function ProductoPage({ params }: Props) {
     <>
       <Navbar />
       
-      <main id="contenido" className="section detail-page-section">
+      <main id="contenido" className="section section-compact-top detail-page-section">
         <div className="container detail-layout">
           <nav className="detail-breadcrumb" aria-label="Breadcrumb">
-            <ol className="detail-breadcrumb-list detail-breadcrumb-list-mobile">
-              <li><Link href="/tienda">Tienda</Link></li>
-              <li className="detail-breadcrumb-current" aria-current="page">{product.name}</li>
-            </ol>
-
-            <ol className="detail-breadcrumb-list detail-breadcrumb-list-desktop">
+            <ol className="detail-breadcrumb-list">
               <li><Link href="/">Inicio</Link></li>
               <li><Link href="/tienda">Tienda</Link></li>
               <li><Link href={`/tienda/${product.category}`}>{categoryLabel}</Link></li>
