@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="es-AR" className={`${manrope.variable} ${outfit.variable}`}>
       <body className="antialiased">
-        {children}
+        <div id="app-shell">{children}</div>
         <ToastProvider />
       </body>
     </html>

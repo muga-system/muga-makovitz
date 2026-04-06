@@ -6,8 +6,7 @@ import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import { formatArs } from "@/utils/format";
 import { notFound } from "next/navigation";
 import ProductDetailClient from "./ProductDetailClient";
-import Image from "next/image";
-import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
+import ProductImageGalleryClient from "./ProductImageGalleryClient";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,13 +26,7 @@ export default async function ProductoPage({ params }: Props) {
     notFound();
   }
 
-  const detailImages = (() => {
-    const base = product?.images?.length ? [...product.images] : [siteConfig.assets.heroImage];
-    while (base.length < 4) {
-      base.push(base[0]);
-    }
-    return base.slice(0, 4);
-  })();
+  const detailImages = product?.images?.length ? product.images : [siteConfig.assets.heroImage];
 
   const footerWhatsappUrl = buildWhatsAppUrl(
     siteConfig.whatsappNumber,
@@ -53,55 +46,7 @@ export default async function ProductoPage({ params }: Props) {
       <main id="contenido" className="section">
         <div className="container" style={{ display: "grid", gap: "2.5rem", gridTemplateColumns: "1fr", alignItems: "start" }}>
           <figure style={{ margin: 0 }}>
-            <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "1fr", alignItems: "stretch" }}>
-              <Image
-                id="detail-main-image"
-                src={detailImages[0]}
-                alt={product.name}
-                width={1200}
-                height={1500}
-                quality={IMAGE_QUALITY.detailMain}
-                sizes={IMAGE_SIZES.detailMain}
-                style={{ 
-                  width: "100%", 
-                  aspectRatio: "auto", 
-                  maxHeight: "500px", 
-                  objectFit: "cover", 
-                  borderRadius: "var(--radius-lg)", 
-                  border: "1px solid var(--color-border)",
-                  boxShadow: "var(--shadow-md)"
-                }}
-              />
-
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem" }}>
-                {detailImages.map((img, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    style={{ 
-                      padding: 0, 
-                      border: "1px solid var(--color-border)", 
-                      borderRadius: "12px", 
-                      overflow: "hidden", 
-                      background: "transparent", 
-                      cursor: "pointer",
-                      opacity: index === 0 ? 1 : 0.75
-                    }}
-                    aria-label={`Ver imagen ${index + 1}`}
-                  >
-                    <Image
-                      src={img}
-                      alt={`${product.name} vista ${index + 1}`}
-                      width={220}
-                      height={220}
-                      quality={IMAGE_QUALITY.detailThumb}
-                      sizes={IMAGE_SIZES.detailThumb}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
+            <ProductImageGalleryClient images={detailImages} productName={product.name} />
           </figure>
 
           <div style={{ display: "grid", gap: "1rem" }}>
