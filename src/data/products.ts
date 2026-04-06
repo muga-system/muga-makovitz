@@ -27,7 +27,7 @@ export const products: Product[] = [
     cardBenefit: "Espacioso, resistente y con estilo unico",
     features: ["Tela resistente de alta calidad", "Estampa original exclusiva", "Correas reforzadas", "Interior con bolsillo", "Hecho a mano"],
     close: "Un bolso tote para acompañarte todos los días con estilo.",
-    images: ["/bolso-simple/original.webp"],
+    images: ["/bolso-simple/original.png"],
     active: true
   },
   {
@@ -42,7 +42,7 @@ export const products: Product[] = [
     cardBenefit: "Espacioso, resistente y con estilo unico",
     features: ["Tela resistente de alta calidad", "Estampa fresh exclusiva", "Correas reforzadas", "Interior con bolsillo", "Hecho a mano"],
     close: "Un bolso tote para acompañarte todos los días con estilo.",
-    images: ["/bolso-simple/fresh.webp"],
+    images: ["/bolso-simple/fresh.png"],
     active: true
   },
   {
@@ -57,7 +57,7 @@ export const products: Product[] = [
     cardBenefit: "Espacioso, resistente y con estilo unico",
     features: ["Tela resistente de alta calidad", "Estampa chic exclusiva", "Correas reforzadas", "Interior con bolsillo", "Hecho a mano"],
     close: "Un bolso tote para acompañarte todos los días con estilo.",
-    images: ["/bolso-simple/chic.webp"],
+    images: ["/bolso-simple/chic.png"],
     active: true
   },
   {
@@ -72,7 +72,7 @@ export const products: Product[] = [
     cardBenefit: "Espacioso, resistente y con estilo unico",
     features: ["Tela resistente de alta calidad", "Estampa organic exclusiva", "Correas reforzadas", "Interior con bolsillo", "Hecho a mano"],
     close: "Un bolso tote para acompañarte todos los días con estilo.",
-    images: ["/bolso-simple/organic.webp"],
+    images: ["/bolso-simple/organic.png"],
     active: true
   },
   {
@@ -87,7 +87,7 @@ export const products: Product[] = [
     cardBenefit: "Espacioso, resistente y con estilo unico",
     features: ["Tela resistente de alta calidad", "Estampa magnolia exclusiva", "Correas reforzadas", "Interior con bolsillo", "Hecho a mano"],
     close: "Un bolso tote para acompañarte todos los días con estilo.",
-    images: ["/bolso-simple/magnolia.webp"],
+    images: ["/bolso-simple/magnolia.png"],
     active: true
   }
 ];

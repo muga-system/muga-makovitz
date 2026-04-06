@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
 
 interface FeaturedProductCardProps {
   item: {
@@ -19,7 +20,15 @@ export default function FeaturedProductCard({ item, ctaUrl }: FeaturedProductCar
   return (
     <article className="product-card featured-card">
       <Link href={ctaUrl} className="featured-image-link" aria-label={`Ver ${item.name}`}>
-        <Image src={item.image} alt={item.name} className="card-image card-image-product featured-image" width={800} height={800} />
+        <Image
+          src={item.image}
+          alt={item.name}
+          className="card-image card-image-product featured-image"
+          width={800}
+          height={800}
+          quality={IMAGE_QUALITY.listing}
+          sizes={IMAGE_SIZES.productCard}
+        />
         <span className="product-badge featured-badge">Curado</span>
       </Link>
 

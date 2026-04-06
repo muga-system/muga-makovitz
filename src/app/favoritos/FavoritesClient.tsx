@@ -9,6 +9,7 @@ import Image from "next/image";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { formatArs } from "@/utils/format";
 import { toast } from "sonner";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
 
 export default function FavoritesClient() {
   const favoriteIds = useFavoritesStore((state) => state.ids);
@@ -49,6 +50,8 @@ export default function FavoritesClient() {
                 className="card-image card-image-product shop-image"
                 width={800}
                 height={800}
+                quality={IMAGE_QUALITY.listing}
+                sizes={IMAGE_SIZES.productCard}
               />
             </Link>
             <button

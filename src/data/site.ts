@@ -22,7 +22,7 @@ export const siteConfig = {
   brand: "Nora Makovitz",
   assets: {
     logo: "/logo.png",
-    heroImage: "/bolso-simple/original.webp"
+    heroImage: "/bolso-simple/original.png"
   },
   instagram: "https://www.instagram.com/babushka.arg/",
   instagramHandle: "@babushka.arg",
@@ -77,37 +77,37 @@ export const categoryItems: CategoryItem[] = [
 ];
 
 export const featuredProducts: FeaturedProduct[] = [
-  { name: "Bolso Ligero - Original", price: "$20.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.webp" },
-  { name: "Bolso Ligero - Fresh", price: "$20.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.webp" },
-  { name: "Bolso Ligero - Chic", price: "$20.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.webp" },
-  { name: "Bolso Ligero - Organic", price: "$20.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.webp" },
-  { name: "Bolso Ligero - Magnolia", price: "$20.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.webp" }
+  { name: "Bolso Ligero - Original", price: "$20.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.png" },
+  { name: "Bolso Ligero - Fresh", price: "$20.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.png" },
+  { name: "Bolso Ligero - Chic", price: "$20.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.png" },
+  { name: "Bolso Ligero - Organic", price: "$20.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.png" },
+  { name: "Bolso Ligero - Magnolia", price: "$20.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.png" }
 ];
 
 export const weeklyWorks: WeeklyWork[] = [
   {
     title: "Elegi categoria",
     note: "Entra a Tienda y filtra por el tipo de pieza que estas buscando.",
-    image: "/bolso-simple/original.webp"
+    image: "/bolso-simple/original.png"
   },
   {
     title: "Mira detalles",
     note: "Abri cada producto para revisar fotos, caracteristicas y stock disponible.",
-    image: "/bolso-simple/fresh.webp"
+    image: "/bolso-simple/fresh.png"
   },
   {
     title: "Guarda o agrega",
     note: "Sumalo a favoritos o al carrito para ordenar la decision de compra.",
-    image: "/bolso-simple/chic.webp"
+    image: "/bolso-simple/chic.png"
   },
   {
     title: "Completa checkout",
     note: "Carga tu nombre y WhatsApp para dejar el pedido listo en un minuto.",
-    image: "/bolso-simple/organic.webp"
+    image: "/bolso-simple/organic.png"
   },
   {
     title: "Confirma por WhatsApp",
     note: "Hace click en consultar por WhatsApp y cerramos disponibilidad, envio y pago.",
-    image: "/bolso-simple/magnolia.webp"
+    image: "/bolso-simple/magnolia.png"
   }
 ];

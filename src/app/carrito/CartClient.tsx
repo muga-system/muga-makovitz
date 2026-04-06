@@ -8,6 +8,7 @@ import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { formatArs } from "@/utils/format";
 import { useState } from "react";
 import { toast } from "sonner";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
 
 export default function CartClient() {
   const items = useCartStore(selectCartItems);
@@ -49,6 +50,8 @@ export default function CartClient() {
               width={220}
               height={220}
               className="cart-thumb"
+              quality={IMAGE_QUALITY.cartThumb}
+              sizes={IMAGE_SIZES.cartThumb}
             />
             
             <div className="cart-body">

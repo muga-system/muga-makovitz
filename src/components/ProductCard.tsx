@@ -8,6 +8,7 @@ import { ShoppingCart, Heart } from "lucide-react";
 import { useState } from "react";
 import { formatArs } from "@/utils/format";
 import { toast } from "sonner";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
 
 interface ProductCardProps {
   product: {
@@ -65,6 +66,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             className="card-image card-image-product shop-image"
             width={800}
             height={800}
+            quality={IMAGE_QUALITY.listing}
+            sizes={IMAGE_SIZES.productCard}
           />
         </Link>
         <button

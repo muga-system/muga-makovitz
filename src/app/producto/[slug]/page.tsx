@@ -7,6 +7,7 @@ import { formatArs } from "@/utils/format";
 import { notFound } from "next/navigation";
 import ProductDetailClient from "./ProductDetailClient";
 import Image from "next/image";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -59,6 +60,8 @@ export default async function ProductoPage({ params }: Props) {
                 alt={product.name}
                 width={1200}
                 height={1500}
+                quality={IMAGE_QUALITY.detailMain}
+                sizes={IMAGE_SIZES.detailMain}
                 style={{ 
                   width: "100%", 
                   aspectRatio: "auto", 
@@ -91,6 +94,8 @@ export default async function ProductoPage({ params }: Props) {
                       alt={`${product.name} vista ${index + 1}`}
                       width={220}
                       height={220}
+                      quality={IMAGE_QUALITY.detailThumb}
+                      sizes={IMAGE_SIZES.detailThumb}
                       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                     />
                   </button>

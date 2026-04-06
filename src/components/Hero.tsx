@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
 
 interface HeroProps {
   brand: string;
@@ -39,7 +40,16 @@ export default function Hero({
           </div>
         </div>
         <div className="hero-visual">
-          <Image src={heroImageSrc} alt={brand} className="hero-photo" width={1200} height={900} priority />
+          <Image
+            src={heroImageSrc}
+            alt={brand}
+            className="hero-photo"
+            width={1200}
+            height={900}
+            quality={IMAGE_QUALITY.hero}
+            sizes={IMAGE_SIZES.hero}
+            priority
+          />
         </div>
       </div>
     </section>
