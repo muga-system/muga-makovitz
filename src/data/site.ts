@@ -77,11 +77,11 @@ export const categoryItems: CategoryItem[] = [
 ];
 
 export const featuredProducts: FeaturedProduct[] = [
-  { name: "Bolso Ligero - Original", price: "$28.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.webp" },
-  { name: "Bolso Ligero - Fresh", price: "$28.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.webp" },
-  { name: "Bolso Ligero - Chic", price: "$28.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.webp" },
-  { name: "Bolso Ligero - Organic", price: "$28.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.webp" },
-  { name: "Bolso Ligero - Magnolia", price: "$28.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.webp" }
+  { name: "Bolso Ligero - Original", price: "$20.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.webp" },
+  { name: "Bolso Ligero - Fresh", price: "$20.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.webp" },
+  { name: "Bolso Ligero - Chic", price: "$20.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.webp" },
+  { name: "Bolso Ligero - Organic", price: "$20.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.webp" },
+  { name: "Bolso Ligero - Magnolia", price: "$20.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.webp" }
 ];
 
 export const weeklyWorks: WeeklyWork[] = [
