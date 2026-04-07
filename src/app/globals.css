@@ -46,6 +46,11 @@ body {
     var(--color-bg);
 }
 
+::selection {
+  background: color-mix(in srgb, var(--color-primary-soft) 82%, var(--color-primary) 18%);
+  color: var(--color-text);
+}
+
 #app-shell {
   transition: filter 0.24s ease;
 }
