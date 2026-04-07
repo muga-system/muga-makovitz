@@ -36,11 +36,6 @@ export default function Home() {
               <p className="section-kicker">Colección</p>
               <h2 id="categories-title" className="section-title">Colección</h2>
               <p className="section-subtitle">Bolsos, carteras y organizadores para uso diario.</p>
-              <ul className="section-points">
-                <li>Hecho a mano</li>
-                <li>Uso real</li>
-                <li>Producción limitada</li>
-              </ul>
             </div>
 
             <div className="categories-grid">

@@ -4,7 +4,7 @@ import { selectCartItems, selectCartTotal, useCartStore } from "@/store/cartStor
 import { useCartHydrated } from "@/store/hydration";
 import { useState } from "react";
 import { formatArs } from "@/utils/format";
-import { buildWhatsAppUrl } from "@/utils/whatsapp";
+import { buildOrderWhatsAppMessage, buildWhatsAppUrl } from "@/utils/whatsapp";
 import { siteConfig } from "@/data/site";
 
 export default function CheckoutClient() {
@@ -20,29 +20,24 @@ export default function CheckoutClient() {
     e.preventDefault();
     
     const orderId = `NM-${Math.floor(1000 + Math.random() * 9000)}`;
-    const lines = items.map(
-      (item) => `- ${item.qty}x ${item.name} (${formatArs(item.price)}) = ${formatArs(item.qty * item.price)}`
-    );
+    const lines = items.map((item) => ({
+      qty: item.qty,
+      name: item.name,
+      unitPrice: formatArs(item.price),
+      lineTotal: formatArs(item.qty * item.price),
+    }));
 
-    const message = [
-      "Nuevo pedido desde la web Nora Makovitz",
-      `Pedido: ${orderId}`,
-      "",
-      `Nombre: ${name}`,
-      `Teléfono: ${phone}`,
-      "Retiro: Coordinado",
-      notes ? `Notas: ${notes}` : "Notas: -",
-      "",
-      "Productos:",
-      ...lines,
-      "",
-      `Total: ${formatArs(total)}`,
-      "",
-      "Quiero confirmar este pedido."
-    ].join("\n");
+    const message = buildOrderWhatsAppMessage({
+      orderId,
+      customerName: name.trim(),
+      customerPhone: phone.trim(),
+      notes,
+      total: formatArs(total),
+      lines,
+    });
 
     const whatsappUrl = buildWhatsAppUrl(siteConfig.whatsappNumber, message);
-    
+
     clearCart();
     window.location.href = whatsappUrl;
   };

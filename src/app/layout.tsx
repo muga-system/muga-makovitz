@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Outfit } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/components/ToastProvider";
+import { siteConfig } from "@/data/site";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -16,8 +17,22 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Nora Makovitz | Bolsos y carteras de tela hechos a mano",
-  description: "Bolsos y carteras de tela hechos a mano, pensados para el uso diario. Produccion limitada, compra simple y cierre rapido.",
+  metadataBase: new URL(siteConfig.canonical),
+  title: siteConfig.seo.title,
+  description: siteConfig.seo.description,
+  icons: {
+    icon: [
+      { url: "/logos/logo.png", type: "image/png" },
+      { url: "/logos/logo.svg", type: "image/svg+xml" },
+    ],
+    apple: "/logos/logo.png",
+    shortcut: "/logos/logo.svg",
+  },
+  openGraph: {
+    title: siteConfig.seo.title,
+    description: siteConfig.seo.description,
+    images: [siteConfig.seo.ogImage],
+  },
 };
 
 export default function RootLayout({

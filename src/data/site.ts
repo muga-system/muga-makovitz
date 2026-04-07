@@ -21,8 +21,9 @@ export type WeeklyWork = {
 export const siteConfig = {
   brand: "Nora Makovitz",
   assets: {
-    logo: "/logo.png",
-    heroImage: "/bolso-simple/original.png"
+    logo: "/logos/logo.svg",
+    logotype: "/logos/logo-tipo.svg",
+    heroImage: "/bolso-simple/original.webp"
   },
   instagram: "https://www.instagram.com/babushka.arg/",
   instagramHandle: "@babushka.arg",
@@ -34,7 +35,7 @@ export const siteConfig = {
     title: "Nora Makovitz | Bolsos y carteras de tela hechos a mano",
     description:
       "Bolsos y carteras de tela hechos a mano, pensados para el uso diario. Produccion limitada, compra simple y cierre rapido.",
-    ogImage: "/og-babushka.svg"
+    ogImage: "/logos/logo-tipo.png"
   },
   hero: {
     heading: "Nora Makovitz",
@@ -77,37 +78,37 @@ export const categoryItems: CategoryItem[] = [
 ];
 
 export const featuredProducts: FeaturedProduct[] = [
-  { name: "Bolso Ligero - Original", price: "$20.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.png" },
-  { name: "Bolso Ligero - Fresh", price: "$20.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.png" },
-  { name: "Bolso Ligero - Chic", price: "$20.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.png" },
-  { name: "Bolso Ligero - Organic", price: "$20.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.png" },
-  { name: "Bolso Ligero - Magnolia", price: "$20.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.png" }
+  { name: "Bolso Ligero - Original", price: "$20.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.webp" },
+  { name: "Bolso Ligero - Fresh", price: "$20.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.webp" },
+  { name: "Bolso Ligero - Chic", price: "$20.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.webp" },
+  { name: "Bolso Ligero - Organic", price: "$20.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.webp" },
+  { name: "Bolso Ligero - Magnolia", price: "$20.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.webp" }
 ];
 
 export const weeklyWorks: WeeklyWork[] = [
   {
     title: "Elegi categoria",
     note: "Entra a Tienda y filtra por el tipo de pieza que estas buscando.",
-    image: "/bolso-simple/original.png"
+    image: "/bolso-simple/original.webp"
   },
   {
     title: "Mira detalles",
     note: "Abri cada producto para revisar fotos, caracteristicas y stock disponible.",
-    image: "/bolso-simple/fresh.png"
+    image: "/bolso-simple/fresh.webp"
   },
   {
     title: "Guarda o agrega",
     note: "Sumalo a favoritos o al carrito para ordenar la decision de compra.",
-    image: "/bolso-simple/chic.png"
+    image: "/bolso-simple/chic.webp"
   },
   {
     title: "Completa checkout",
     note: "Carga tu nombre y WhatsApp para dejar el pedido listo en un minuto.",
-    image: "/bolso-simple/organic.png"
+    image: "/bolso-simple/organic.webp"
   },
   {
     title: "Confirma por WhatsApp",
     note: "Hace click en consultar por WhatsApp y cerramos disponibilidad, envio y pago.",
-    image: "/bolso-simple/magnolia.png"
+    image: "/bolso-simple/magnolia.webp"
   }
 ];

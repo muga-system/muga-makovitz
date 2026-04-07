@@ -21,7 +21,7 @@ interface CartStore {
 
 type PersistedCartState = Pick<CartStore, 'items'>;
 
-const CART_STORE_VERSION = 1;
+const CART_STORE_VERSION = 2;
 
 const migrateCartState = (persistedState: unknown, version: number): PersistedCartState => {
   if (!persistedState || typeof persistedState !== 'object') {
@@ -29,7 +29,13 @@ const migrateCartState = (persistedState: unknown, version: number): PersistedCa
   }
 
   const legacy = persistedState as { items?: unknown };
-  const items = Array.isArray(legacy.items) ? (legacy.items as CartItem[]) : [];
+  const items = Array.isArray(legacy.items)
+    ? (legacy.items as CartItem[]).map((item) => ({
+        ...item,
+        stock: 1,
+        qty: Math.min(Math.max(item.qty, 1), 1),
+      }))
+    : [];
 
   if (version <= 0) {
     return { items };
@@ -57,12 +63,21 @@ export const useCartStore = create<CartStore>()(
           set({
             items: current.map(i =>
               i.id === item.id
-                ? { ...i, qty: Math.min(i.qty + qty, item.stock) }
+                ? { ...i, qty: Math.min(i.qty + qty, Math.min(item.stock, 1)) }
                 : i
             )
           });
         } else {
-          set({ items: [...current, { ...item, qty: Math.min(qty, item.stock) }] });
+          set({
+            items: [
+              ...current,
+              {
+                ...item,
+                stock: Math.min(item.stock, 1),
+                qty: Math.min(qty, Math.min(item.stock, 1)),
+              },
+            ],
+          });
         }
       },
       
@@ -76,7 +91,7 @@ export const useCartStore = create<CartStore>()(
         } else {
           set({
             items: get().items.map(i =>
-              i.id === id ? { ...i, qty: Math.min(qty, i.stock) } : i
+                i.id === id ? { ...i, qty: Math.min(qty, Math.min(i.stock, 1)) } : i
             )
           });
         }
