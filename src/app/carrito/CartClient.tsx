@@ -3,12 +3,12 @@
 import { selectCartItems, selectCartTotal, useCartStore } from "@/store/cartStore";
 import { useCartHydrated } from "@/store/hydration";
 import Link from "next/link";
-import Image from "next/image";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { formatArs } from "@/utils/format";
 import { useState } from "react";
 import { toast } from "sonner";
 import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 export default function CartClient() {
   const items = useCartStore(selectCartItems);
@@ -44,12 +44,13 @@ export default function CartClient() {
       <div className="cart-items">
         {items.map((item) => (
           <div key={item.id} className="cart-item">
-            <Image
+            <ImageWithSkeleton
               src={item.image}
               alt={item.name}
               width={220}
               height={220}
               className="cart-thumb"
+              wrapperClassName="cart-thumb-shell"
               quality={IMAGE_QUALITY.cartThumb}
               sizes={IMAGE_SIZES.cartThumb}
             />

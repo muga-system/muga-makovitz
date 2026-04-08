@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useCartStore } from "@/store/cartStore";
 import { selectIsFavorite, useFavoritesStore } from "@/store/favoritesStore";
 import { ShoppingCart, Heart } from "lucide-react";
@@ -9,6 +8,7 @@ import { useState } from "react";
 import { formatArs } from "@/utils/format";
 import { toast } from "sonner";
 import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 interface ProductCardProps {
   product: {
@@ -60,10 +60,11 @@ export default function ProductCard({ product }: ProductCardProps) {
     <article className="product-card shop-card">
       <div className="shop-media">
         <Link href={`/producto/${product.slug}`} className="shop-image-link" aria-label={`Ver ${product.name}`}>
-          <Image
+          <ImageWithSkeleton
             src={product.images[0]}
             alt={product.name}
             className="card-image card-image-product shop-image"
+            wrapperClassName="shop-image-shell"
             width={800}
             height={800}
             quality={IMAGE_QUALITY.listing}

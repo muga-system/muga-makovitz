@@ -5,11 +5,11 @@ import { useCartStore } from "@/store/cartStore";
 import { useFavoritesHydrated } from "@/store/hydration";
 import { products } from "@/data/products";
 import Link from "next/link";
-import Image from "next/image";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { formatArs } from "@/utils/format";
 import { toast } from "sonner";
 import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 export default function FavoritesClient() {
   const favoriteIds = useFavoritesStore((state) => state.ids);
@@ -44,10 +44,11 @@ export default function FavoritesClient() {
         <article key={product.id} className="product-card shop-card favorite-card">
           <div className="shop-media">
             <Link href={`/producto/${product.slug}`} className="shop-image-link" aria-label={`Ver ${product.name}`}>
-              <Image
+              <ImageWithSkeleton
                 src={product.images[0]}
                 alt={product.name}
                 className="card-image card-image-product shop-image"
+                wrapperClassName="shop-image-shell"
                 width={800}
                 height={800}
                 quality={IMAGE_QUALITY.listing}

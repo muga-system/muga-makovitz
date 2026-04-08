@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 interface HeroProps {
   brand: string;
@@ -41,10 +41,11 @@ export default function Hero({
           </div>
         </div>
         <div className="hero-visual">
-          <Image
+          <ImageWithSkeleton
             src={heroImageSrc}
             alt={brand}
             className="hero-photo"
+            wrapperClassName="hero-photo-shell"
             width={1200}
             height={900}
             quality={IMAGE_QUALITY.hero}

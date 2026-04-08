@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { siteConfig } from "@/data/site";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 interface SiteFooterProps {
   brand: string;
@@ -26,12 +26,13 @@ export default function SiteFooter({
       <div className="site-footer-shell">
         <div className="site-footer-top">
           <div className="site-footer-brand-block">
-            <Image
+            <ImageWithSkeleton
               src={siteConfig.assets.logo}
               alt={`${brand} logo`}
               width={40}
               height={40}
               className="site-footer-logo"
+              wrapperClassName="site-footer-logo-shell"
             />
             <p className="site-footer-kicker">{brand}</p>
             <h2 className="site-footer-title">Hecho para durar</h2>

@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { selectCartCount, useCartStore } from "@/store/cartStore";
 import { selectFavoriteCount, useFavoritesStore } from "@/store/favoritesStore";
 import { useCartHydrated, useFavoritesHydrated } from "@/store/hydration";
 import { ShoppingCart, Heart, Store, Menu, X, House } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { siteConfig } from "@/data/site";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 export default function Navbar() {
   const cartCount = useCartStore(selectCartCount);
@@ -50,12 +50,13 @@ export default function Navbar() {
         <nav className="top-nav" aria-label="Navegación principal">
           <div className="container top-nav-inner">
             <Link href="/" className="brand-link" aria-label="Ir al inicio">
-              <Image
+              <ImageWithSkeleton
                 src={siteConfig.assets.logotype}
                 alt={siteConfig.brand}
                 width={160}
                 height={44}
                 className="brand-logotype"
+                wrapperClassName="brand-logotype-shell"
                 priority
               />
             </Link>
@@ -112,12 +113,13 @@ export default function Navbar() {
       <nav className="top-nav" aria-label="Navegación principal">
         <div className="container top-nav-inner">
           <Link href="/" className="brand-link" aria-label="Ir al inicio">
-            <Image
+            <ImageWithSkeleton
               src={siteConfig.assets.logotype}
               alt={siteConfig.brand}
               width={160}
               height={44}
               className="brand-logotype"
+              wrapperClassName="brand-logotype-shell"
               priority
             />
           </Link>

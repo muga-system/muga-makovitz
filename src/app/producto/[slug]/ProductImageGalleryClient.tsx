@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 interface ProductImageGalleryClientProps {
   images: string[];
@@ -33,7 +33,7 @@ export default function ProductImageGalleryClient({
   return (
     <div className="detail-gallery">
       <div className="detail-main-image-frame" aria-label={`Imagen de ${productName}`}>
-          <Image
+          <ImageWithSkeleton
             id="detail-main-image"
             src={activeImage}
             alt={productName}
@@ -42,6 +42,7 @@ export default function ProductImageGalleryClient({
             quality={IMAGE_QUALITY.detailMain}
             sizes={IMAGE_SIZES.detailMain}
             className="detail-main-image"
+            wrapperClassName="detail-main-image-shell"
           />
       </div>
 
@@ -55,7 +56,7 @@ export default function ProductImageGalleryClient({
               className={`detail-thumb-btn ${index === activeIndex ? "is-active" : ""}`}
               aria-label={`Ver imagen ${index + 1}`}
             >
-              <Image
+              <ImageWithSkeleton
                 src={img}
                 alt={`${productName} vista ${index + 1}`}
                 width={220}
@@ -63,6 +64,7 @@ export default function ProductImageGalleryClient({
                 quality={IMAGE_QUALITY.detailThumb}
                 sizes={IMAGE_SIZES.detailThumb}
                 className="detail-thumb-image"
+                wrapperClassName="detail-thumb-image-shell"
               />
             </button>
           ))}

@@ -69,6 +69,59 @@ a {
   text-decoration: none;
 }
 
+.image-shell {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.image-skeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(105deg,
+      color-mix(in srgb, var(--color-tone-sand) 64%, white 36%) 20%,
+      color-mix(in srgb, var(--color-surface) 40%, white 60%) 45%,
+      color-mix(in srgb, var(--color-tone-sand) 64%, white 36%) 70%);
+  background-size: 220% 100%;
+  animation: image-skeleton-wave 1.05s ease-in-out infinite;
+  opacity: 1;
+  transition: opacity 0.28s ease;
+}
+
+.image-fade {
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.image-shell.is-loaded .image-fade {
+  opacity: 1;
+}
+
+.image-shell.is-loaded .image-skeleton {
+  opacity: 0;
+}
+
+.hero-photo-shell,
+.shop-image-shell,
+.featured-image-shell,
+.detail-main-image-shell,
+.detail-thumb-image-shell,
+.cart-thumb-shell {
+  width: 100%;
+}
+
+.brand-logotype-shell {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.site-footer-logo-shell {
+  width: 40px;
+  height: 40px;
+}
+
 .container {
   width: min(100% - 2rem, var(--container-max));
   margin-inline: auto;
@@ -1632,5 +1685,14 @@ a {
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes image-skeleton-wave {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
   }
 }

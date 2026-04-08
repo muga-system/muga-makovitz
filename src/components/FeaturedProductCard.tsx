@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { IMAGE_QUALITY, IMAGE_SIZES } from "@/utils/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 interface FeaturedProductCardProps {
   item: {
@@ -20,10 +20,11 @@ export default function FeaturedProductCard({ item, ctaUrl }: FeaturedProductCar
   return (
     <article className="product-card featured-card">
       <Link href={ctaUrl} className="featured-image-link" aria-label={`Ver ${item.name}`}>
-        <Image
+        <ImageWithSkeleton
           src={item.image}
           alt={item.name}
           className="card-image card-image-product featured-image"
+          wrapperClassName="featured-image-shell"
           width={800}
           height={800}
           quality={IMAGE_QUALITY.listing}
