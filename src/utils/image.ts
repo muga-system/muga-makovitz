@@ -1,9 +1,9 @@
 export const IMAGE_QUALITY = {
-  hero: 88,
-  listing: 84,
-  detailMain: 92,
-  detailThumb: 86,
-  cartThumb: 82,
+  hero: 90,
+  listing: 85,
+  detailMain: 95,
+  detailThumb: 85,
+  cartThumb: 75,
 } as const;
 
 export const IMAGE_SIZES = {
