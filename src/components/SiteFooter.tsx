@@ -36,7 +36,7 @@ export default function SiteFooter({
             />
             <p className="site-footer-kicker">{brand}</p>
             <h2 className="site-footer-title">Hecho para durar</h2>
-            <p className="site-footer-claim">Hecho a mano - Produccion limitada - Sin intermediarios.</p>
+            <p className="site-footer-claim">Hecho a mano - Produccion limitada.</p>
           </div>
 
           <div className="site-footer-links-block">
