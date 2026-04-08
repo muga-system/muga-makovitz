@@ -68,11 +68,6 @@ export default async function ProductoPage({ params }: Props) {
             <p className="detail-price">{formatArs(product.price)}</p>
             <p className="detail-description">{product.description}</p>
 
-            <div className="detail-usage-box">
-              <p className="detail-usage-title">¿Para quién es?</p>
-              <p className="detail-usage-copy">{product.use}</p>
-            </div>
-
             <div className="detail-features">
               <h2 className="detail-features-title">Características</h2>
               <ul className="detail-features-list">
