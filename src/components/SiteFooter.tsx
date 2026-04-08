@@ -59,7 +59,15 @@ export default function SiteFooter({
           </div>
         </div>
 
-        <p className="site-footer-version">© {year} {brand}. Todos los derechos reservados.</p>
+        <div className="site-footer-meta">
+          <p className="site-footer-version">{year} {brand}.</p>
+          <p className="site-footer-credit">
+            {siteConfig.appVersion}{" "}
+            <a href={siteConfig.builtBy.url} target="_blank" rel="noopener noreferrer">
+              {siteConfig.builtBy.name}
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );

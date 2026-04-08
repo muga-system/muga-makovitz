@@ -73,12 +73,12 @@ export default function Navbar() {
 
             <div className="nav-actions">
               <Link href="/favoritos" className="btn btn-secondary nav-favorites" aria-label="Favoritos">
-                <Heart size={20} />
-                <span className="favorites-count" style={{ display: "none" }}>0</span>
+                <span className="nav-icon-skeleton" aria-hidden="true" />
+                <span className="nav-badge-skeleton" aria-hidden="true" />
               </Link>
               <Link href="/carrito" className="btn btn-secondary nav-cart" aria-label="Carrito vacío">
-                <ShoppingCart size={20} />
-                <span className="cart-count" style={{ display: "none" }}>0</span>
+                <span className="nav-icon-skeleton" aria-hidden="true" />
+                <span className="nav-badge-skeleton" aria-hidden="true" />
               </Link>
               <Link href="/tienda" className="btn btn-primary nav-tienda">
                 <Store size={18} />

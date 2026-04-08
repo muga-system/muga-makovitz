@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
 import { selectIsFavorite, useFavoritesStore } from "@/store/favoritesStore";
+import { useFavoritesHydrated } from "@/store/hydration";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useState } from "react";
 import { formatArs } from "@/utils/format";
@@ -28,6 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const addToCart = useCartStore((state) => state.addToCart);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
   const isFav = useFavoritesStore(selectIsFavorite(product.id));
+  const favoritesHydrated = useFavoritesHydrated();
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
@@ -73,10 +75,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
         <button
           onClick={handleToggleFav}
-          className="btn shop-fav-btn"
+          className={`btn shop-fav-btn ${favoritesHydrated ? "" : "btn-state-skeleton"}`}
           aria-label={isFav ? "Quitar de favoritos" : "Agregar a favoritos"}
+          disabled={!favoritesHydrated}
         >
-          <Heart size={18} fill={isFav ? "currentColor" : "none"} />
+          <Heart size={18} fill={isFav ? "currentColor" : "none"} className={favoritesHydrated ? "" : "btn-state-content-hidden"} />
         </button>
       </div>
       

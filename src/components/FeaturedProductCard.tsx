@@ -30,7 +30,7 @@ export default function FeaturedProductCard({ item, ctaUrl }: FeaturedProductCar
           quality={IMAGE_QUALITY.listing}
           sizes={IMAGE_SIZES.productCard}
         />
-        <span className="product-badge featured-badge">Curado</span>
+        <span className="product-badge featured-badge">Bolso</span>
       </Link>
 
       <div className="featured-content">

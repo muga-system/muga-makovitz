@@ -20,6 +20,11 @@ export type WeeklyWork = {
 
 export const siteConfig = {
   brand: "Nora Makovitz",
+  appVersion: "v0.1.0",
+  builtBy: {
+    name: "muga.dev",
+    url: "https://muga.dev"
+  },
   assets: {
     logo: "/logos/logo.svg",
     logotype: "/logos/logo-tipo.svg",
@@ -78,11 +83,11 @@ export const categoryItems: CategoryItem[] = [
 ];
 
 export const featuredProducts: FeaturedProduct[] = [
-  { name: "Bolso Ligero - Original", price: "$20.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.webp" },
-  { name: "Bolso Ligero - Fresh", price: "$20.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.webp" },
-  { name: "Bolso Ligero - Chic", price: "$20.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.webp" },
-  { name: "Bolso Ligero - Organic", price: "$20.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.webp" },
-  { name: "Bolso Ligero - Magnolia", price: "$20.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.webp" }
+  { name: "Bolso Ligero - Original", price: "$25.000", slug: "bolso-ligero-original", image: "/bolso-simple/original.webp" },
+  { name: "Bolso Ligero - Fresh", price: "$25.000", slug: "bolso-ligero-fresh", image: "/bolso-simple/fresh.webp" },
+  { name: "Bolso Ligero - Chic", price: "$25.000", slug: "bolso-ligero-chic", image: "/bolso-simple/chic.webp" },
+  { name: "Bolso Ligero - Organic", price: "$25.000", slug: "bolso-ligero-organic", image: "/bolso-simple/organic.webp" },
+  { name: "Bolso Ligero - Magnolia", price: "$25.000", slug: "bolso-ligero-magnolia", image: "/bolso-simple/magnolia.webp" }
 ];
 
 export const weeklyWorks: WeeklyWork[] = [
