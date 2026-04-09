@@ -3,6 +3,7 @@ import { Manrope, Outfit } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/components/ToastProvider";
 import { siteConfig } from "@/data/site";
+import { Analytics } from "@vercel/analytics/next";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className="antialiased">
         <div id="app-shell">{children}</div>
         <ToastProvider />
+        <Analytics />
       </body>
     </html>
   );
