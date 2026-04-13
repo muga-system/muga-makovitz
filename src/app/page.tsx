@@ -4,6 +4,7 @@ import CategoryCard from "@/components/CategoryCard";
 import FeaturedProductCard from "@/components/FeaturedProductCard";
 import SiteFooter from "@/components/SiteFooter";
 import { categoryItems, featuredProducts, siteConfig, weeklyWorks } from "@/data/site";
+import { products } from "@/data/products";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import Link from "next/link";
 
@@ -13,7 +14,8 @@ const footerWhatsappUrl = buildWhatsAppUrl(
 );
 
 export default function Home() {
-  const hasUpcomingCategories = categoryItems.some((item) => item.slug !== "bolsos");
+  const activeCategorySlugs = new Set(products.filter((product) => product.active).map((product) => product.category));
+  const hasUpcomingCategories = categoryItems.some((item) => !activeCategorySlugs.has(item.slug));
 
   return (
     <>
@@ -35,7 +37,7 @@ export default function Home() {
             <div className="section-head">
               <p className="section-kicker">Colección</p>
               <h2 id="categories-title" className="section-title">Colección</h2>
-              <p className="section-subtitle">Bolsos, carteras y organizadores para uso diario.</p>
+              <p className="section-subtitle">Bolsos y bordados hechos a mano para uso diario.</p>
             </div>
 
             <div className="categories-grid">
@@ -43,7 +45,7 @@ export default function Home() {
                 <CategoryCard
                   key={item.slug}
                   item={item}
-                  ctaUrl={item.slug !== "bolsos" ? "#" : `/tienda/${item.slug}`}
+                  ctaUrl={activeCategorySlugs.has(item.slug) ? `/tienda/${item.slug}` : "#"}
                 />
               ))}
             </div>

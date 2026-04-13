@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Package } from "lucide-react";
+import { Handbag, Package, Volleyball } from "lucide-react";
 
 interface CategoryCardProps {
   item: {
@@ -14,12 +14,13 @@ interface CategoryCardProps {
 }
 
 export default function CategoryCard({ item, ctaUrl }: CategoryCardProps) {
-  const isComingSoon = item.slug !== "bolsos";
+  const isComingSoon = ctaUrl === "#";
+  const Icon = item.slug === "bordados" ? Volleyball : item.slug === "bolsos" ? Handbag : Package;
   
   return (
     <article className={`category-card ${isComingSoon ? "category-coming-soon" : ""}`}>
       <div className="category-icon">
-        <Package size={24} />
+        <Icon size={24} />
       </div>
       <h3 className="card-title">{item.name}</h3>
       <p className="card-meta">{item.meta}</p>

@@ -1,4 +1,4 @@
-import { products } from "@/data/products";
+import { products, categories } from "@/data/products";
 import { siteConfig } from "@/data/site";
 import Navbar from "@/components/Navbar";
 import SiteFooter from "@/components/SiteFooter";
@@ -31,6 +31,21 @@ export default function TiendaPage() {
             <div className="shop-header">
               <h1 id="shop-title" className="section-title">Tienda</h1>
               <p className="section-subtitle">Todos los modelos disponibles</p>
+            </div>
+
+            <div className="category-filter">
+              <Link href="/tienda" className="filter-chip is-active">
+                Todos
+              </Link>
+              {categories.map((cat) => (
+                <Link
+                  key={cat.slug}
+                  href={`/tienda/${cat.slug}`}
+                  className="filter-chip"
+                >
+                  {cat.label}
+                </Link>
+              ))}
             </div>
 
             <div className="shop-products-grid">

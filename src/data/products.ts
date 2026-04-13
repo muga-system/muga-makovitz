@@ -4,7 +4,7 @@ export type Product = {
   name: string;
   price: number;
   stock: number;
-  category: "carteras" | "bolsos" | "organizadores" | "regalos";
+  category: "carteras" | "bolsos" | "organizadores" | "regalos" | "bordados";
   description: string;
   use: string;
   cardBenefit: string;
@@ -89,11 +89,87 @@ export const products: Product[] = [
     close: "Un bolso para acompañarte todos los días con estilo.",
     images: ["/bolso-simple/magnolia.webp"],
     active: true
+  },
+  {
+    id: "bd-001",
+    slug: "bordado-bird",
+    name: "Bordado Bird",
+    price: 35000,
+    stock: 1,
+    category: "bordados",
+    description: "Bordado artesanal con diseno Bird en tonalidades suaves para sumar textura y color al espacio.",
+    use: "",
+    cardBenefit: "Pieza unica hecha a mano",
+    features: ["Bordado artesanal", "Diseno exclusivo", "Produccion limitada"],
+    close: "Una pieza bordada para destacar cualquier rincon.",
+    images: ["/bordados/bird.png"],
+    active: true
+  },
+  {
+    id: "bd-002",
+    slug: "bordado-bird-red",
+    name: "Bordado Bird Red",
+    price: 35000,
+    stock: 1,
+    category: "bordados",
+    description: "Bordado artesanal con diseno Bird Red y contraste intenso para una presencia visual marcada.",
+    use: "",
+    cardBenefit: "Pieza unica hecha a mano",
+    features: ["Bordado artesanal", "Paleta en tonos rojos", "Produccion limitada"],
+    close: "Un bordado con caracter para espacios con personalidad.",
+    images: ["/bordados/bird-red.png"],
+    active: true
+  },
+  {
+    id: "bd-003",
+    slug: "bordado-dear",
+    name: "Bordado Dear",
+    price: 35000,
+    stock: 1,
+    category: "bordados",
+    description: "Bordado artesanal Dear con composicion delicada y acabado textil de alta presencia.",
+    use: "",
+    cardBenefit: "Pieza unica hecha a mano",
+    features: ["Bordado artesanal", "Terminacion detallada", "Produccion limitada"],
+    close: "Una pieza de autor para sumar calidez y detalle.",
+    images: ["/bordados/dear.png"],
+    active: true
+  },
+  {
+    id: "bd-004",
+    slug: "bordado-flower-pink",
+    name: "Bordado Flower Pink",
+    price: 35000,
+    stock: 1,
+    category: "bordados",
+    description: "Bordado artesanal Flower Pink con tonos rosados y trazos organicos inspirados en botanica.",
+    use: "",
+    cardBenefit: "Pieza unica hecha a mano",
+    features: ["Bordado artesanal", "Paleta rosa", "Produccion limitada"],
+    close: "Una propuesta bordada suave y expresiva.",
+    images: ["/bordados/fower-pink.png"],
+    active: true
+  },
+  {
+    id: "bd-005",
+    slug: "bordado-horse",
+    name: "Bordado Horse",
+    price: 35000,
+    stock: 1,
+    category: "bordados",
+    description: "Bordado artesanal Horse con lineas definidas y presencia grafica para composiciones contemporaneas.",
+    use: "",
+    cardBenefit: "Pieza unica hecha a mano",
+    features: ["Bordado artesanal", "Diseno figurativo", "Produccion limitada"],
+    close: "Una pieza de coleccion para quienes valoran lo hecho a mano.",
+    images: ["/bordados/horse.png"],
+    active: true
   }
 ];
 
 export const categories = [
-  { slug: "bolsos", label: "Bolsos" }
+  { slug: "bolsos", label: "Bolsos" },
+  { slug: "bordados", label: "Bordados" }
 ];
 
 export const getProductBySlug = (slug: string): Product | undefined =>

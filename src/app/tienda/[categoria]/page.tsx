@@ -5,6 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{ categoria: string }>;
@@ -15,12 +16,14 @@ const footerWhatsappUrl = buildWhatsAppUrl(
   "Hola! Quiero consultar una pieza de Nora Makovitz."
 );
 
-const availableCategories = new Set(["bolsos", "carteras", "organizadores", "regalos"]);
+const availableCategories = new Set(categories.map((category) => category.slug));
 
 export default async function CategoriaPage({ params }: Props) {
   const { categoria } = await params;
-  const safeCategory = availableCategories.has(categoria) ? categoria : "all";
-  const activeProducts = products.filter(p => p.active && (safeCategory === "all" || p.category === safeCategory));
+  if (!availableCategories.has(categoria)) {
+    notFound();
+  }
+  const activeProducts = products.filter((p) => p.active && p.category === categoria);
 
   const categoryLabel = categories.find(c => c.slug === categoria)?.label || categoria;
 

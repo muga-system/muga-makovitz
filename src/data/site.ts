@@ -1,8 +1,10 @@
+import type { Product } from "@/data/products";
+
 export type CategoryItem = {
   name: string;
   meta: string;
   cta: string;
-  slug: string;
+  slug: Product["category"];
 };
 
 export type FeaturedProduct = {
@@ -57,10 +59,10 @@ export const siteConfig = {
 
 export const categoryItems: CategoryItem[] = [
   {
-    name: "Carteras",
-    meta: "Livianas, practicas y faciles de llevar",
+    name: "Bordados",
+    meta: "Piezas bordadas de produccion limitada",
     cta: "Elegir modelo",
-    slug: "carteras"
+    slug: "bordados"
   },
   {
     name: "Bolsos",
@@ -69,16 +71,16 @@ export const categoryItems: CategoryItem[] = [
     slug: "bolsos"
   },
   {
+    name: "Carteras",
+    meta: "Livianas, practicas y faciles de llevar",
+    cta: "Elegir modelo",
+    slug: "carteras"
+  },
+  {
     name: "Organizadores",
     meta: "Orden simple para cartera o bolso",
     cta: "Elegir modelo",
     slug: "organizadores"
-  },
-  {
-    name: "Regalos",
-    meta: "Piezas chicas para regalar o uso personal",
-    cta: "Elegir modelo",
-    slug: "regalos"
   }
 ];
 
